@@ -186,7 +186,9 @@ function SectionIntro({
   title,
   description,
   actionLabel,
+  actionAriaLabel,
   actionHref,
+  actionExternal,
 }) {
   return (
     <div className="section-intro">
@@ -197,7 +199,13 @@ function SectionIntro({
       <div className="section-intro__aside">
         <p>{description}</p>
         {actionLabel ? (
-          <a className="ghost-button" href={actionHref}>
+          <a
+            className="ghost-button icon-button"
+            href={actionHref}
+            aria-label={actionAriaLabel}
+            target={actionExternal ? "_blank" : undefined}
+            rel={actionExternal ? "noreferrer" : undefined}
+          >
             {actionLabel}
           </a>
         ) : null}
@@ -286,8 +294,10 @@ function App() {
             eyebrow="From Idea to Interface"
             title="A selection of projects built to test concepts, refine user flows, and ship usable products."
             description="Selected projects that reflect how I approach interaction design, frontend systems, and developer-focused product thinking."
-            actionLabel="View my GitHub"
+            actionLabel={<SiGithub />}
+            actionAriaLabel="View my GitHub profile"
             actionHref="https://github.com/ppsssj"
+            actionExternal
           />
 
           <div
@@ -338,12 +348,13 @@ function App() {
                       Back to projects
                     </button>
                     <a
-                      className="ghost-button project-detail-panel__repo"
+                      className="ghost-button icon-button project-detail-panel__repo"
                       href={selectedProject.link}
+                      aria-label={`View ${selectedProject.title} repository`}
                       target="_blank"
                       rel="noreferrer"
                     >
-                      View repository
+                      <SiGithub />
                     </a>
                   </div>
 
