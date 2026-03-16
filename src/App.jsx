@@ -21,6 +21,17 @@ import {
   SiVite,
 } from "react-icons/si";
 import { VscVscode } from "react-icons/vsc";
+import {
+  copy,
+  keywordLabels,
+  navigationItems,
+  projectCatalog,
+  sectionIds,
+  serviceCatalog,
+  serviceItemLabels,
+  serviceLabels,
+  socials,
+} from "./content";
 import codeGraphImage from "../assets/CodeGraph.png";
 import gitEffectsImage from "../assets/git_effects.gif";
 import graphMindImage from "../assets/GraphMind.png";
@@ -28,180 +39,45 @@ import prismDesignImage from "../assets/PrismDesign.gif";
 import profileImage from "../assets/Profile.png";
 import trafficNoiseImage from "../assets/Traffic Noise Prediction System.png";
 
-const navigation = [
-  { label: "Projects", href: "#work" },
-  { label: "Profile", href: "#services" },
-  { label: "Story", href: "#about" },
-  { label: "Contact", href: "#contact" },
-];
-
-const sectionIds = navigation.map((item) => item.href.slice(1));
-
-const projects = [
-  {
-    client: "Interactive Math Tool",
-    title: "GraphMind",
-    image: graphMindImage,
-    summary:
-      "A web-based graph visualization tool that connects math expressions, graph interaction, and AI-assisted generation in one exploratory interface.",
-    role: "Frontend Engineer",
-    focus: "Interactive graph system",
-    stack: ["React", "Vite", "JavaScript", "Graph UI"],
-    detail:
-      "GraphMind is designed to make mathematical relationships easier to explore by connecting equations, graph rendering, and user interaction in a single web experience. The interface focuses on helping users move between expressions and visual output without friction.",
-    highlights: [
-      "Built an interactive graph interface that links equations and visual output in real time.",
-      "Designed the flow so graph updates feel immediate and exploratory instead of static.",
-      "Structured the product around math learning, concept discovery, and AI-assisted interaction.",
-    ],
-    link: "https://github.com/ppsssj/GraphMind-monorepo.git",
-  },
-  {
-    client: "VS Code Extension",
-    title: "Git-Effects",
-    image: gitEffectsImage,
-    summary:
-      "A VS Code extension that turns Git actions like commit, push, and pull into immediate visual feedback instead of plain terminal logs.",
-    role: "Extension Developer",
-    focus: "Developer experience",
-    stack: ["VS Code API", "Webview", "JavaScript", "Git"],
-    detail:
-      "Git-Effects rethinks how Git feedback is delivered inside VS Code. Instead of asking users to parse terminal output after each action, it provides direct visual responses through a Webview-based panel that feels lightweight and immediate.",
-    highlights: [
-      "Converted commit, push, and pull feedback into visual UI events instead of plain text logs.",
-      "Used Webview-based presentation to make extension feedback feel clear and noticeable.",
-      "Focused on reducing context switching during everyday Git workflows in the editor.",
-    ],
-    link: "https://github.com/ppsssj/Git-Effects.git",
-  },
-  {
-    client: "Code Visualization",
-    title: "CodeGraph",
-    image: codeGraphImage,
-    summary:
-      "A source relationship visualizer that extracts structures from TS/JS code and maps call graphs, type relations, and data flow as node-edge views.",
-    role: "Frontend Engineer",
-    focus: "Static analysis visualization",
-    stack: ["React", "TypeScript", "Webview", "Graph Visualization"],
-    detail:
-      "CodeGraph helps developers understand large codebases by translating static analysis output into a navigable visual graph. It is built to reveal structural relationships that are difficult to read from files alone, especially during onboarding or refactoring.",
-    highlights: [
-      "Visualized functions, classes, interfaces, and types as connected graph structures.",
-      "Mapped call graphs, type relations, and data flow in a single interactive view.",
-      "Improved codebase readability for dependency tracking and impact analysis.",
-    ],
-    link: "https://github.com/ppsssj/CodeGraph.git",
-  },
-  {
-    client: "AI + Data Product",
-    title: "Traffic Noise Prediction System",
-    image: trafficNoiseImage,
-    summary:
-      "A prediction system that combines a CatBoost regression model with a React map UI to estimate traffic noise levels from environmental metadata.",
-    role: "Frontend / AI Product Builder",
-    focus: "Prediction interface",
-    stack: ["React", "Flask", "CatBoost", "JSON Metadata"],
-    detail:
-      "This project combines machine learning and interface design to predict traffic noise from environmental metadata. The frontend emphasizes quick experimentation, giving users an immediate way to explore noise curves and contributing factors through a map-based workflow.",
-    highlights: [
-      "Connected a CatBoost regression model to a React interface for fast prediction feedback.",
-      "Built a map-driven UI to input location and environmental conditions intuitively.",
-      "Presented 24-hour noise curves and contribution data in a readable product format.",
-    ],
-    link: "https://github.com/ppsssj/Traffic-Noise-Prediction-System.git",
-  },
-  {
-    client: "Visual Programming",
-    title: "PrismDesign",
-    image: prismDesignImage,
-    summary:
-      "A web-based node programming system inspired by TouchDesigner, focused on real-time graph evaluation and visual pipeline composition.",
-    role: "Frontend System Designer",
-    focus: "Node-based runtime UI",
-    stack: [
-      "React",
-      "Node Graph UI",
-      "Runtime Evaluation",
-      "Visual Programming",
-    ],
-    detail:
-      "PrismDesign explores how node-based visual programming can work on the web. Inspired by TouchDesigner, it focuses on building a canvas where users can compose processing pipelines visually and inspect changing states through a runtime-driven interface.",
-    highlights: [
-      "Created a web canvas for node placement, linking, and pipeline composition.",
-      "Applied runtime and evaluator concepts to propagate values across the graph.",
-      "Focused on real-time interaction patterns that make visual logic design approachable.",
-    ],
-    link: "https://github.com/SHOUT-TO-THE-SCREEN/touchdesign-fullstack.git",
-  },
-];
-
-const services = [
-  {
-    name: "Tech Stack",
-    items: ["React", "Vite", "JavaScript", "HTML", "CSS", "TypeScript"],
-  },
-  {
-    name: "Developer Tools",
-    items: ["Git", "GitHub", "VS Code", "Figma", "Postman", "Notion"],
-  },
-  {
-    name: "Awards",
-    items: [
-      "BLEP Data Utilization Competition",
-      "Best Paper Award, Korea Data Science Society",
-    ],
-  },
-  {
-    name: "Activities",
-    items: [
-      "Leadership Staff, LikeLion Club",
-      "AICS Undergraduate Researcher",
-      "창업동아리 팀장",
-    ],
-  },
-  {
-    name: "Certification",
-    items: ["Information Processing Engineer"],
-  },
-];
-
-const clients = [
-  "Creative",
-  "Rapid Prototyping",
-  "Fast Execution",
-  "Product Focus",
-  "Product Thinking",
-  "AI Integration",
-  "User Flow Design",
-  "initiative",
-];
-
-const socials = [
-  { label: "Twitter", href: "https://twitter.com" },
-  { label: "Dribbble", href: "https://dribbble.com/dawidpietrasiak" },
-  { label: "Instagram", href: "https://www.instagram.com/dawid_pietrasiak/" },
-];
+const projectImages = {
+  codeGraphImage,
+  gitEffectsImage,
+  graphMindImage,
+  prismDesignImage,
+  trafficNoiseImage,
+};
 
 const itemIcons = {
-  React: SiReact,
-  Vite: SiVite,
-  JavaScript: SiJavascript,
-  HTML: SiHtml5,
-  CSS: SiCss,
-  TypeScript: SiTypescript,
-  Git: SiGit,
-  GitHub: SiGithub,
-  "VS Code": VscVscode,
-  Figma: SiFigma,
-  Postman: SiPostman,
-  Notion: SiNotion,
-  "BLEP Data Utilization Competition": HiOutlineTrophy,
-  "Best Paper Award, Korea Data Science Society": HiOutlineTrophy,
-  "Leadership Staff, LikeLion Club": HiOutlineUserGroup,
-  "AICS Undergraduate Researcher": HiOutlineAcademicCap,
-  "창업동아리 팀장": HiOutlineUserGroup,
-  "Information Processing Engineer": HiOutlineIdentification,
+  react: SiReact,
+  vite: SiVite,
+  javascript: SiJavascript,
+  html: SiHtml5,
+  css: SiCss,
+  typescript: SiTypescript,
+  git: SiGit,
+  github: SiGithub,
+  vscode: VscVscode,
+  figma: SiFigma,
+  postman: SiPostman,
+  notion: SiNotion,
+  blep_competition: HiOutlineTrophy,
+  best_paper: HiOutlineTrophy,
+  likelion_staff: HiOutlineUserGroup,
+  aics_researcher: HiOutlineAcademicCap,
+  startup_club_lead: HiOutlineUserGroup,
+  information_processing_engineer: HiOutlineIdentification,
 };
+
+function renderParts(parts, baseClass) {
+  return parts.map((part, index) => (
+    <span
+      key={`${baseClass}-${index}-${part.text}`}
+      className={`${baseClass} ${baseClass}--${part.tone}`}
+    >
+      {part.text}
+    </span>
+  ));
+}
 
 function SectionIntro({
   eyebrow,
@@ -238,11 +114,37 @@ function SectionIntro({
 }
 
 function App() {
+  const [locale, setLocale] = useState("en");
   const [activeService, setActiveService] = useState(0);
-  const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedProjectId, setSelectedProjectId] = useState(null);
   const [activeSection, setActiveSection] = useState(sectionIds[0]);
+
+  const ui = copy[locale];
+  const navigation = navigationItems.map((item) => ({
+    ...item,
+    label: ui.navigation[item.key],
+  }));
+  const projects = projectCatalog.map((project) => ({
+    ...project,
+    image: projectImages[project.imageKey],
+    ...project.content[locale],
+  }));
+  const services = serviceCatalog.map((service) => ({
+    key: service.key,
+    name: serviceLabels[locale][service.key],
+    items: service.items.map((item) => ({
+      key: item,
+      label: serviceItemLabels[locale][item],
+    })),
+  }));
+  const selectedProject =
+    projects.find((project) => project.id === selectedProjectId) ?? null;
   const isProjectDetailOpen = Boolean(selectedProject);
   const activeSectionIndex = Math.max(sectionIds.indexOf(activeSection), 0);
+
+  useEffect(() => {
+    document.documentElement.lang = locale === "kr" ? "ko" : "en";
+  }, [locale]);
 
   useEffect(() => {
     const sections = sectionIds
@@ -274,7 +176,7 @@ function App() {
       window.removeEventListener("scroll", updateActiveSection);
       window.removeEventListener("resize", updateActiveSection);
     };
-  }, [sectionIds]);
+  }, []);
 
   return (
     <div className="page-shell">
@@ -283,11 +185,11 @@ function App() {
 
       <nav
         className="section-rail"
-        aria-label="Section navigation"
+        aria-label={ui.sectionRailLabel}
         style={{ "--active-index": activeSectionIndex }}
       >
         <div className="section-rail__inner">
-          <p className="section-rail__eyebrow"></p>
+          <p className="section-rail__eyebrow">{ui.sectionRailEyebrow}</p>
           <div className="section-rail__list">
             <span className="section-rail__track" aria-hidden="true" />
             <span className="section-rail__thumb" aria-hidden="true" />
@@ -313,48 +215,51 @@ function App() {
         <a className="brand" href="#top">
           PPsssJ.
         </a>
+
+        <div
+          className="language-toggle"
+          role="group"
+          aria-label={ui.languageToggleLabel}
+        >
+          {["en", "kr"].map((code) => (
+            <button
+              key={code}
+              type="button"
+              className={`language-toggle__button${
+                locale === code ? " is-active" : ""
+              }`}
+              onClick={() => setLocale(code)}
+              aria-pressed={locale === code}
+            >
+              {ui.languageLabels[code]}
+            </button>
+          ))}
+        </div>
       </header>
 
       <main id="top">
         <section className="hero">
           <div className="hero__copy">
-            <p className="eyebrow">Frontend • AI Experiences</p>
-            <h1
-              className="hero__headline"
-              aria-label="Building interactive products with frontend and AI."
-            >
-              <span className="hero__word hero__word--soft">Building</span>
-              <span className="hero__word hero__word--strong">interactive</span>
-              <span className="hero__word hero__word--strong">products</span>
-              <span className="hero__word hero__word--soft">with</span>
-              <span className="hero__word hero__word--strong">frontend</span>
-              <span className="hero__word hero__word--strong">AI.</span>
+            <p className="eyebrow">{ui.hero.eyebrow}</p>
+            <h1 className="hero__headline" aria-label={ui.hero.headlineAria}>
+              {renderParts(ui.hero.headlineParts, "hero__word")}
             </h1>
-            <p className="hero__description">
-              A portfolio focused on frontend engineering, interactive
-              experiences, and turning ideas into real products.
-            </p>
+            <p className="hero__description">{ui.hero.description}</p>
             <div className="hero__actions">
               <a className="primary-button" href="#work">
-                View projects
+                {ui.hero.primaryAction}
               </a>
               <a className="ghost-button" href="#contact">
-                Let&apos;s talk
+                {ui.hero.secondaryAction}
               </a>
             </div>
             <dl className="hero__stats">
-              <div>
-                <dt>Interactive</dt>
-                <dd>Product-focused builds</dd>
-              </div>
-              <div>
-                <dt>Frontend + AI</dt>
-                <dd>Interfaces with intelligence</dd>
-              </div>
-              <div>
-                <dt>End-to-end</dt>
-                <dd>Idea • Design • Build</dd>
-              </div>
+              {ui.hero.stats.map((stat) => (
+                <div key={stat.term}>
+                  <dt>{stat.term}</dt>
+                  <dd>{stat.description}</dd>
+                </div>
+              ))}
             </dl>
           </div>
 
@@ -363,51 +268,24 @@ function App() {
               <img src={profileImage} alt={projects[0].title} loading="eager" />
             </div>
             <div className="hero-card hero-card--accent">
-              <span>Frontend systems</span>
-              <strong>Interactive & AI-driven experiences</strong>
+              <span>{ui.hero.cards.accentEyebrow}</span>
+              <strong>{ui.hero.cards.accentTitle}</strong>
             </div>
             <div className="hero-card hero-card--outline">
-              <span>Concept to product</span>
-              <strong>Ideas built into real interfaces</strong>
+              <span>{ui.hero.cards.outlineEyebrow}</span>
+              <strong>{ui.hero.cards.outlineTitle}</strong>
             </div>
           </div>
         </section>
 
         <section className="projects-section" id="work">
           <SectionIntro
-            eyebrow="From Idea to Interface"
+            eyebrow={ui.projects.eyebrow}
             titleClassName="section-title section-title--mixed"
-            title={
-              <>
-                <span className="section-title__word section-title__word--soft">
-                  Projects
-                </span>
-                <span className="section-title__word section-title__word--soft">
-                  built to explore
-                </span>
-                <span className="section-title__word section-title__word--strong">
-                  ideas,
-                </span>
-                <span className="section-title__word section-title__word--soft">
-                  refine
-                </span>
-                <span className="section-title__word section-title__word--strong">
-                  experiences,
-                </span>
-                <span className="section-title__word section-title__word--soft">
-                  and
-                </span>
-                <span className="section-title__word section-title__word--soft">
-                  deliver
-                </span>
-                <span className="section-title__word section-title__word--strong">
-                  usable products.
-                </span>
-              </>
-            }
-            description="Selected projects that reflect how I approach interaction design, frontend systems, and developer-focused product thinking."
+            title={renderParts(ui.projects.titleParts, "section-title__word")}
+            description={ui.projects.description}
             actionLabel={<SiGithub />}
-            actionAriaLabel="View my GitHub profile"
+            actionAriaLabel={ui.projects.githubAriaLabel}
             actionHref="https://github.com/ppsssj"
             actionExternal
           />
@@ -419,7 +297,7 @@ function App() {
               <div className="projects-grid">
                 {projects.map((project, index) => (
                   <article
-                    key={project.title}
+                    key={project.id}
                     className={`project-card project-card--${(index % 3) + 1}`}
                   >
                     <div className="project-card__image-wrap">
@@ -438,9 +316,9 @@ function App() {
                       <button
                         type="button"
                         className="project-card__link"
-                        onClick={() => setSelectedProject(project)}
+                        onClick={() => setSelectedProjectId(project.id)}
                       >
-                        Discuss this project
+                        {ui.projects.discussLabel}
                       </button>
                     </div>
                   </article>
@@ -459,15 +337,15 @@ function App() {
                     <button
                       type="button"
                       className="ghost-button icon-button project-detail-panel__back"
-                      onClick={() => setSelectedProject(null)}
-                      aria-label="Back to projects"
+                      onClick={() => setSelectedProjectId(null)}
+                      aria-label={ui.projects.backLabel}
                     >
                       <HiOutlineArrowLeft />
                     </button>
                     <a
                       className="ghost-button icon-button project-detail-panel__repo"
                       href={selectedProject.link}
-                      aria-label={`View ${selectedProject.title} repository`}
+                      aria-label={ui.projects.repoAriaLabel(selectedProject.title)}
                       target="_blank"
                       rel="noreferrer"
                     >
@@ -495,23 +373,25 @@ function App() {
 
                   <div className="project-detail-panel__facts">
                     <article>
-                      <span>Role</span>
+                      <span>{ui.projects.facts.role}</span>
                       <strong>{selectedProject.role}</strong>
                     </article>
                     <article>
-                      <span>Focus</span>
+                      <span>{ui.projects.facts.focus}</span>
                       <strong>{selectedProject.focus}</strong>
                     </article>
                   </div>
 
                   <div className="project-detail-panel__columns">
                     <article className="project-detail-card">
-                      <p className="eyebrow">Project summary</p>
+                      <p className="eyebrow">{ui.projects.detailCards.summary}</p>
                       <p>{selectedProject.summary}</p>
                     </article>
 
                     <article className="project-detail-card">
-                      <p className="eyebrow">Highlights</p>
+                      <p className="eyebrow">
+                        {ui.projects.detailCards.highlights}
+                      </p>
                       <ul>
                         {selectedProject.highlights.map((item) => (
                           <li key={item}>{item}</li>
@@ -520,7 +400,7 @@ function App() {
                     </article>
 
                     <article className="project-detail-card">
-                      <p className="eyebrow">Stack</p>
+                      <p className="eyebrow">{ui.projects.detailCards.stack}</p>
                       <ul className="project-detail-card__tags">
                         {selectedProject.stack.map((item) => (
                           <li key={item}>{item}</li>
@@ -536,19 +416,23 @@ function App() {
 
         <section className="services-section" id="services">
           <SectionIntro
-            eyebrow="Profile"
-            title="A quick overview of the stack, recognition, and experiences behind my work."
-            description="This interactive panel highlights the technologies I use, the awards I have received, and the communities I have contributed to."
+            eyebrow={ui.profile.eyebrow}
+            title={ui.profile.title}
+            description={ui.profile.description}
           />
 
           <div className="services-layout">
-            <div className="services-list" role="tablist" aria-label="Services">
+            <div
+              className="services-list"
+              role="tablist"
+              aria-label={ui.profile.tabAriaLabel}
+            >
               {services.map((service, index) => {
                 const isActive = activeService === index;
 
                 return (
                   <button
-                    key={service.name}
+                    key={service.key}
                     type="button"
                     className={`service-trigger${isActive ? " is-active" : ""}`}
                     onClick={() => setActiveService(index)}
@@ -564,27 +448,27 @@ function App() {
             </div>
 
             <div className="service-panel">
-              <p className="eyebrow">Selected category</p>
+              <p className="eyebrow">{ui.profile.selectedLabel}</p>
               <h3>{services[activeService].name}</h3>
               <ul
                 className={
-                  services[activeService].name === "Tech Stack" ||
-                  services[activeService].name === "Developer Tools"
+                  services[activeService].key === "tech_stack" ||
+                  services[activeService].key === "developer_tools"
                     ? "service-panel__list service-panel__list--grid"
                     : "service-panel__list"
                 }
               >
                 {services[activeService].items.map((item) => {
-                  const Icon = itemIcons[item];
+                  const Icon = itemIcons[item.key];
 
                   return (
-                    <li key={item}>
+                    <li key={item.key}>
                       {Icon ? (
                         <span className="service-item__icon" aria-hidden="true">
                           <Icon />
                         </span>
                       ) : null}
-                      <span>{item}</span>
+                      <span>{item.label}</span>
                     </li>
                   );
                 })}
@@ -595,53 +479,24 @@ function App() {
 
         <section className="about-section" id="about">
           <SectionIntro
-            eyebrow="Our Story"
+            eyebrow={ui.story.eyebrow}
             titleClassName="section-title section-title--mixed"
-            title={
-              <>
-                <span className="section-title__word section-title__word--soft">
-                  A
-                </span>
-                <span className="section-title__word section-title__word--strong">
-                  frontend-focused
-                </span>
-                <span className="section-title__word section-title__word--soft">
-                  builder who turns
-                </span>
-                <span className="section-title__word section-title__word--strong">
-                  creative ideas
-                </span>
-                <span className="section-title__word section-title__word--soft">
-                  into
-                </span>
-                <span className="section-title__word section-title__word--strong">
-                  interactive,
-                </span>
-                <span className="section-title__word section-title__word--strong">
-                  usable products.
-                </span>
-              </>
-            }
-            description="The original page used custom SVG logos and heavy layout wrappers. Here, the same idea is kept with a lighter, editable component structure."
+            title={renderParts(ui.story.titleParts, "section-title__word")}
+            description={ui.story.description}
             actionLabel={<HiOutlineEnvelope />}
-            actionAriaLabel="Jump to contact section"
+            actionAriaLabel={ui.story.contactAriaLabel}
             actionHref="#contact"
           />
 
           <div className="about-grid">
             <article className="about-card">
-              <h3>How I build products</h3>
-              <p>
-                I approach product building through rapid prototyping,
-                interactive frontend development, and practical iteration.
-                Rather than stopping at ideas, I focus on shaping concepts into
-                clear user flows and usable interfaces.
-              </p>
+              <h3>{ui.story.cardTitle}</h3>
+              <p>{ui.story.cardCopy}</p>
             </article>
 
-            <div className="logo-cloud" aria-label="Client list">
-              {clients.map((client) => (
-                <span key={client}>{client}</span>
+            <div className="logo-cloud" aria-label={ui.story.keywordsAriaLabel}>
+              {keywordLabels[locale].map((item) => (
+                <span key={item}>{item}</span>
               ))}
             </div>
           </div>
@@ -651,13 +506,9 @@ function App() {
       <footer className="site-footer" id="contact">
         <div className="site-footer__content">
           <div>
-            <p className="eyebrow eyebrow--light">Contact</p>
-            <h2>Let&apos;s start creating together.</h2>
-            <p className="site-footer__copy">
-              The static export has been replaced with a React-first landing
-              page that is ready for further componentization, routing, or
-              CMS/API wiring.
-            </p>
+            <p className="eyebrow eyebrow--light">{ui.footer.eyebrow}</p>
+            <h2>{ui.footer.title}</h2>
+            <p className="site-footer__copy">{ui.footer.copy}</p>
           </div>
 
           <div className="site-footer__actions">
@@ -692,7 +543,7 @@ function App() {
         </div>
 
         <div className="site-footer__bottom">
-          <span>© 2026 PPsssJ. All rights reserved.</span>
+          <span>{ui.footer.rights}</span>
         </div>
       </footer>
     </div>
