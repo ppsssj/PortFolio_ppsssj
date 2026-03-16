@@ -307,9 +307,15 @@ export const keywordLabels = {
 };
 
 export const socials = [
-  { label: "Twitter", href: "https://twitter.com" },
-  { label: "Dribbble", href: "https://dribbble.com/dawidpietrasiak" },
-  { label: "Instagram", href: "https://www.instagram.com/dawid_pietrasiak/" },
+  {
+    label: "Gmail",
+    href: "mailto:ppssjj020222@gmail.com?subject=Project%20Inquiry",
+  },
+  {
+    label: "Naver Mail",
+    href: "mailto:ppssjj020222@naver.com?subject=Project%20Inquiry",
+  },
+  { label: "GitHub", href: "https://github.com/ppsssj" },
 ];
 
 export const copy = {

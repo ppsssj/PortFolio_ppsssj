@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import {
   HiOutlineAcademicCap,
   HiOutlineArrowLeft,
+  HiOutlineAtSymbol,
   HiOutlineEnvelope,
   HiOutlineIdentification,
   HiOutlineTrophy,
@@ -66,6 +67,12 @@ const itemIcons = {
   aics_researcher: HiOutlineAcademicCap,
   startup_club_lead: HiOutlineUserGroup,
   information_processing_engineer: HiOutlineIdentification,
+};
+
+const footerSocialIcons = {
+  Gmail: HiOutlineEnvelope,
+  "Naver Mail": HiOutlineAtSymbol,
+  GitHub: SiGithub,
 };
 
 function renderParts(parts, baseClass) {
@@ -514,9 +521,9 @@ function App() {
           <div className="site-footer__actions">
             <a
               className="primary-button primary-button--light"
-              href="mailto:hello@ppsssj.studio"
+              href="mailto:ppssjj020222@gmail.com"
             >
-              hello@ppsssj.studio
+              ppssjj020222@gmail.com
             </a>
 
             <div className="footer-links">
@@ -528,16 +535,25 @@ function App() {
             </div>
 
             <div className="footer-links footer-links--social">
-              {socials.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {item.label}
-                </a>
-              ))}
+              {socials.map((item) => {
+                const Icon = footerSocialIcons[item.label];
+                const isExternal = item.href.startsWith("http");
+
+                return (
+                  <a
+                    key={item.label}
+                    className="footer-social-link"
+                    href={item.href}
+                    target={isExternal ? "_blank" : undefined}
+                    rel={isExternal ? "noreferrer" : undefined}
+                    aria-label={item.label}
+                    title={item.label}
+                  >
+                    {Icon ? <Icon /> : null}
+                    <span>{item.label}</span>
+                  </a>
+                );
+              })}
             </div>
           </div>
         </div>
