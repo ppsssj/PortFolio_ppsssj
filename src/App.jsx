@@ -1,4 +1,10 @@
 import { useState } from "react";
+import codeGraphImage from "../assets/CodeGraph.png";
+import gitEffectsImage from "../assets/git_effects.gif";
+import graphMindImage from "../assets/GraphMind.png";
+import prismDesignImage from "../assets/PrismDesign.gif";
+import profileImage from "../assets/Profile.png";
+import trafficNoiseImage from "../assets/Traffic Noise Prediction System.png";
 
 const navigation = [
   { label: "Work", href: "#work" },
@@ -9,81 +15,76 @@ const navigation = [
 
 const projects = [
   {
-    client: "Booking Corp.",
-    title: "Fintech Dello Banking App",
-    image:
-      "../assets/Profile.png",
+    client: "Interactive Math Tool",
+    title: "GraphMind",
+    image: graphMindImage,
     summary:
-      "A finance-first product system designed to make complex account data feel calm, fast, and trustworthy.",
+      "A web-based graph visualization tool that connects math expressions, graph interaction, and AI-assisted generation in one exploratory interface.",
   },
   {
-    client: "Dazzle Inc.",
-    title: "Dazzle Branding",
-    image:
-      "https://framerusercontent.com/images/YQgvAS4i8HeJRZmg2q1Kfwr6UM.png",
+    client: "VS Code Extension",
+    title: "Git-Effects",
+    image: gitEffectsImage,
     summary:
-      "A bold brand refresh that sharpened visual language, motion cues, and launch storytelling across touchpoints.",
+      "A VS Code extension that turns Git actions like commit, push, and pull into immediate visual feedback instead of plain terminal logs.",
   },
   {
-    client: "CareSunset",
-    title: "Healthcare Mobile App",
-    image: "https://framerusercontent.com/images/JdY0YpiIaeEXQWB6oQk0zawZk.png",
+    client: "Code Visualization",
+    title: "CodeGraph",
+    image: codeGraphImage,
     summary:
-      "A patient-friendly experience focused on clarity, accessibility, and frictionless booking flows on mobile.",
+      "A source relationship visualizer that extracts structures from TS/JS code and maps call graphs, type relations, and data flow as node-edge views.",
   },
   {
-    client: "Tech Bank Client",
-    title: "Technical Infographic",
-    image:
-      "https://framerusercontent.com/images/GRXDkBEY59pvYkXWCPZvnEFLlKo.png",
+    client: "AI + Data Product",
+    title: "Traffic Noise Prediction System",
+    image: trafficNoiseImage,
     summary:
-      "An editorial data story that translates dense infrastructure concepts into visual explanations people actually follow.",
+      "A prediction system that combines a CatBoost regression model with a React map UI to estimate traffic noise levels from environmental metadata.",
   },
   {
-    client: "Notex",
-    title: "Extend & Support App Plugin",
-    image:
-      "https://framerusercontent.com/images/lZw1bhCVV0JpyjKh2ETJmXTjkoY.png",
+    client: "Visual Programming",
+    title: "PrismDesign",
+    image: prismDesignImage,
     summary:
-      "A plugin ecosystem concept built to feel native, modular, and easy to expand without increasing product complexity.",
+      "A web-based node programming system inspired by TouchDesigner, focused on real-time graph evaluation and visual pipeline composition.",
   },
 ];
 
 const services = [
   {
-    name: "Branding",
+    name: "Tech Stack",
     items: [
-      "Logo Design",
-      "Brand Guidelines",
-      "Collateral Design",
-      "Rebranding Services",
+      "React",
+      "Vite",
+      "JavaScript",
     ],
   },
   {
-    name: "UX/UI Designs",
+    name: "Developer Tools",
     items: [
-      "User Research and Analysis",
-      "Wireframing and Prototyping",
-      "User Interface Design",
-      "User Experience Testing",
-      "Responsive Design Solutions",
+      "Git",
+      "GitHub",
     ],
   },
   {
-    name: "Motion & Animation",
+    name: "Awards",
     items: [
-      "Motion Graphics Design",
-      "Animated Explainer Videos",
-      "Interactive Presentations",
+      "BLEP Data Utilization Competition",
+      "Best Paper Award, Korea Data Science Society",
     ],
   },
   {
-    name: "Mobile",
+    name: "Activities",
     items: [
-      "iOS App Development",
-      "Android App Development",
-      "App Prototyping and Testing",
-      "App Maintenance and Updates",
+      "Leadership Staff, LikeLion Club",
+      "AICS Undergraduate Researcher",
+    ],
+  },
+  {
+    name: "Certification",
+    items: [
+      "Information Processing Engineer",
     ],
   },
 ];
@@ -178,8 +179,8 @@ function App() {
                 <dd>Core services</dd>
               </div>
               <div>
-                <dt>100%</dt>
-                <dd>React + Vite structure</dd>
+                <dt>End-to-end</dt>
+                <dd>Idea → Design → Build</dd>
               </div>
             </dl>
           </div>
@@ -187,26 +188,26 @@ function App() {
           <div className="hero__visual" aria-hidden="true">
             <div className="hero-card hero-card--primary">
               <img
-                src={projects[0].image}
+                src={profileImage}
                 alt={projects[0].title}
                 loading="eager"
               />
             </div>
             <div className="hero-card hero-card--accent">
-              <span>Design systems</span>
-              <strong>Mobile products</strong>
+              <span>Frontend systems</span>
+              <strong>Interactive & AI-driven experiences</strong>
             </div>
             <div className="hero-card hero-card--outline">
-              <span>From Framer export</span>
-              <strong>To maintainable React</strong>
+              <span>Concept to product</span>
+              <strong>Ideas built into real interfaces</strong>
             </div>
           </div>
         </section>
 
         <section className="projects-section" id="work">
           <SectionIntro
-            eyebrow="Designing Success"
-            title="Selected work that turns product ideas into clear, tangible experiences."
+            eyebrow="From Idea to Interface"
+            title="A selection of projects built to test concepts, refine user flows, and ship usable products."
             description="Each card is now rendered from React data, making updates far easier than editing a giant exported HTML file."
             actionLabel="Explore all work"
             actionHref="#services"
@@ -219,7 +220,9 @@ function App() {
                 className={`project-card project-card--${(index % 3) + 1}`}
               >
                 <div className="project-card__image-wrap">
-                  <img src={project.image} alt={project.title} loading="lazy" />
+                  <div className="project-card__media">
+                    <img src={project.image} alt={project.title} loading="lazy" />
+                  </div>
                 </div>
                 <div className="project-card__content">
                   <p>{project.client}</p>
@@ -236,9 +239,9 @@ function App() {
 
         <section className="services-section" id="services">
           <SectionIntro
-            eyebrow="Services"
-            title="A compact React accordion for the capabilities originally buried in the export."
-            description="This section is intentionally interactive so the page behaves like an app, not a pasted document."
+            eyebrow="Profile"
+            title="A quick overview of the stack, recognition, and experiences behind my work."
+            description="This interactive panel highlights the technologies I use, the awards I have received, and the communities I have contributed to."
           />
 
           <div className="services-layout">
@@ -262,7 +265,7 @@ function App() {
             </div>
 
             <div className="service-panel">
-              <p className="eyebrow">Currently focused</p>
+              <p className="eyebrow">Selected category</p>
               <h3>{services[activeService].name}</h3>
               <ul>
                 {services[activeService].items.map((item) => (
