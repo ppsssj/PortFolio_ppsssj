@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {
   HiOutlineAcademicCap,
+  HiOutlineArrowLeft,
   HiOutlineIdentification,
   HiOutlineTrophy,
   HiOutlineUserGroup,
@@ -342,10 +343,11 @@ function App() {
                   <div className="project-detail-panel__header">
                     <button
                       type="button"
-                      className="ghost-button project-detail-panel__back"
+                      className="ghost-button icon-button project-detail-panel__back"
                       onClick={() => setSelectedProject(null)}
+                      aria-label="Back to projects"
                     >
-                      Back to projects
+                      <HiOutlineArrowLeft />
                     </button>
                     <a
                       className="ghost-button icon-button project-detail-panel__repo"
