@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import {
   HiOutlineAcademicCap,
   HiOutlineArrowLeft,
+  HiOutlineEnvelope,
   HiOutlineIdentification,
   HiOutlineTrophy,
   HiOutlineUserGroup,
@@ -622,7 +623,8 @@ function App() {
               </>
             }
             description="The original page used custom SVG logos and heavy layout wrappers. Here, the same idea is kept with a lighter, editable component structure."
-            actionLabel="See contact"
+            actionLabel={<HiOutlineEnvelope />}
+            actionAriaLabel="Jump to contact section"
             actionHref="#contact"
           />
 
