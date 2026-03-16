@@ -20,6 +20,17 @@ const projects = [
     image: graphMindImage,
     summary:
       "A web-based graph visualization tool that connects math expressions, graph interaction, and AI-assisted generation in one exploratory interface.",
+    role: "Frontend Engineer",
+    focus: "Interactive graph system",
+    stack: ["React", "Vite", "JavaScript", "Graph UI"],
+    detail:
+      "GraphMind is designed to make mathematical relationships easier to explore by connecting equations, graph rendering, and user interaction in a single web experience. The interface focuses on helping users move between expressions and visual output without friction.",
+    highlights: [
+      "Built an interactive graph interface that links equations and visual output in real time.",
+      "Designed the flow so graph updates feel immediate and exploratory instead of static.",
+      "Structured the product around math learning, concept discovery, and AI-assisted interaction.",
+    ],
+    link: "https://github.com/ppsssj/GraphMind-monorepo.git",
   },
   {
     client: "VS Code Extension",
@@ -27,6 +38,17 @@ const projects = [
     image: gitEffectsImage,
     summary:
       "A VS Code extension that turns Git actions like commit, push, and pull into immediate visual feedback instead of plain terminal logs.",
+    role: "Extension Developer",
+    focus: "Developer experience",
+    stack: ["VS Code API", "Webview", "JavaScript", "Git"],
+    detail:
+      "Git-Effects rethinks how Git feedback is delivered inside VS Code. Instead of asking users to parse terminal output after each action, it provides direct visual responses through a Webview-based panel that feels lightweight and immediate.",
+    highlights: [
+      "Converted commit, push, and pull feedback into visual UI events instead of plain text logs.",
+      "Used Webview-based presentation to make extension feedback feel clear and noticeable.",
+      "Focused on reducing context switching during everyday Git workflows in the editor.",
+    ],
+    link: "https://github.com/ppsssj/Git-Effects.git",
   },
   {
     client: "Code Visualization",
@@ -34,6 +56,17 @@ const projects = [
     image: codeGraphImage,
     summary:
       "A source relationship visualizer that extracts structures from TS/JS code and maps call graphs, type relations, and data flow as node-edge views.",
+    role: "Frontend Engineer",
+    focus: "Static analysis visualization",
+    stack: ["React", "TypeScript", "Webview", "Graph Visualization"],
+    detail:
+      "CodeGraph helps developers understand large codebases by translating static analysis output into a navigable visual graph. It is built to reveal structural relationships that are difficult to read from files alone, especially during onboarding or refactoring.",
+    highlights: [
+      "Visualized functions, classes, interfaces, and types as connected graph structures.",
+      "Mapped call graphs, type relations, and data flow in a single interactive view.",
+      "Improved codebase readability for dependency tracking and impact analysis.",
+    ],
+    link: "https://github.com/ppsssj/CodeGraph.git",
   },
   {
     client: "AI + Data Product",
@@ -41,6 +74,17 @@ const projects = [
     image: trafficNoiseImage,
     summary:
       "A prediction system that combines a CatBoost regression model with a React map UI to estimate traffic noise levels from environmental metadata.",
+    role: "Frontend / AI Product Builder",
+    focus: "Prediction interface",
+    stack: ["React", "Flask", "CatBoost", "JSON Metadata"],
+    detail:
+      "This project combines machine learning and interface design to predict traffic noise from environmental metadata. The frontend emphasizes quick experimentation, giving users an immediate way to explore noise curves and contributing factors through a map-based workflow.",
+    highlights: [
+      "Connected a CatBoost regression model to a React interface for fast prediction feedback.",
+      "Built a map-driven UI to input location and environmental conditions intuitively.",
+      "Presented 24-hour noise curves and contribution data in a readable product format.",
+    ],
+    link: "https://github.com/ppsssj/Traffic-Noise-Prediction-System.git",
   },
   {
     client: "Visual Programming",
@@ -48,6 +92,17 @@ const projects = [
     image: prismDesignImage,
     summary:
       "A web-based node programming system inspired by TouchDesigner, focused on real-time graph evaluation and visual pipeline composition.",
+    role: "Frontend System Designer",
+    focus: "Node-based runtime UI",
+    stack: ["React", "Node Graph UI", "Runtime Evaluation", "Visual Programming"],
+    detail:
+      "PrismDesign explores how node-based visual programming can work on the web. Inspired by TouchDesigner, it focuses on building a canvas where users can compose processing pipelines visually and inspect changing states through a runtime-driven interface.",
+    highlights: [
+      "Created a web canvas for node placement, linking, and pipeline composition.",
+      "Applied runtime and evaluator concepts to propagate values across the graph.",
+      "Focused on real-time interaction patterns that make visual logic design approachable.",
+    ],
+    link: "https://github.com/SHOUT-TO-THE-SCREEN/touchdesign-fullstack.git",
   },
 ];
 
@@ -133,6 +188,8 @@ function SectionIntro({
 
 function App() {
   const [activeService, setActiveService] = useState(0);
+  const [selectedProject, setSelectedProject] = useState(null);
+  const isProjectDetailOpen = Boolean(selectedProject);
 
   return (
     <div className="page-shell">
@@ -208,32 +265,124 @@ function App() {
           <SectionIntro
             eyebrow="From Idea to Interface"
             title="A selection of projects built to test concepts, refine user flows, and ship usable products."
-            description="Each card is now rendered from React data, making updates far easier than editing a giant exported HTML file."
-            actionLabel="Explore all work"
-            actionHref="#services"
+            description="Selected projects that reflect how I approach interaction design, frontend systems, and developer-focused product thinking."
+            actionLabel="View my GitHub"
+            actionHref="https://github.com/ppsssj"
           />
 
-          <div className="projects-grid">
-            {projects.map((project, index) => (
-              <article
-                key={project.title}
-                className={`project-card project-card--${(index % 3) + 1}`}
-              >
-                <div className="project-card__image-wrap">
-                  <div className="project-card__media">
-                    <img src={project.image} alt={project.title} loading="lazy" />
+          <div
+            className={`projects-stage${isProjectDetailOpen ? " is-detail-open" : ""}`}
+          >
+            <div className="projects-gallery" aria-hidden={isProjectDetailOpen}>
+              <div className="projects-grid">
+                {projects.map((project, index) => (
+                  <article
+                    key={project.title}
+                    className={`project-card project-card--${(index % 3) + 1}`}
+                  >
+                    <div className="project-card__image-wrap">
+                      <div className="project-card__media">
+                        <img src={project.image} alt={project.title} loading="lazy" />
+                      </div>
+                    </div>
+                    <div className="project-card__content">
+                      <p>{project.client}</p>
+                      <h3>{project.title}</h3>
+                      <span>{project.summary}</span>
+                      <button
+                        type="button"
+                        className="project-card__link"
+                        onClick={() => setSelectedProject(project)}
+                      >
+                        Discuss this project
+                      </button>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+
+            <aside
+              className="project-detail-panel"
+              aria-live="polite"
+              aria-hidden={!isProjectDetailOpen}
+            >
+              {selectedProject ? (
+                <>
+                  <div className="project-detail-panel__header">
+                    <button
+                      type="button"
+                      className="ghost-button project-detail-panel__back"
+                      onClick={() => setSelectedProject(null)}
+                    >
+                      Back to projects
+                    </button>
+                    <a
+                      className="ghost-button project-detail-panel__repo"
+                      href={selectedProject.link}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      View repository
+                    </a>
                   </div>
-                </div>
-                <div className="project-card__content">
-                  <p>{project.client}</p>
-                  <h3>{project.title}</h3>
-                  <span>{project.summary}</span>
-                  <a className="project-card__link" href="#contact">
-                    Discuss this project
-                  </a>
-                </div>
-              </article>
-            ))}
+
+                  <div className="project-detail-panel__image-wrap">
+                    <div className="project-detail-panel__image">
+                      <img
+                        src={selectedProject.image}
+                        alt={selectedProject.title}
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="project-detail-panel__intro">
+                    <p className="eyebrow">{selectedProject.client}</p>
+                    <h3>{selectedProject.title}</h3>
+                    <p className="project-detail-panel__summary">
+                      {selectedProject.detail}
+                    </p>
+                  </div>
+
+                  <div className="project-detail-panel__facts">
+                    <article>
+                      <span>Role</span>
+                      <strong>{selectedProject.role}</strong>
+                    </article>
+                    <article>
+                      <span>Focus</span>
+                      <strong>{selectedProject.focus}</strong>
+                    </article>
+                  </div>
+
+                  <div className="project-detail-panel__columns">
+                    <article className="project-detail-card">
+                      <p className="eyebrow">Project summary</p>
+                      <p>{selectedProject.summary}</p>
+                    </article>
+
+                    <article className="project-detail-card">
+                      <p className="eyebrow">Highlights</p>
+                      <ul>
+                        {selectedProject.highlights.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    </article>
+
+                    <article className="project-detail-card">
+                      <p className="eyebrow">Stack</p>
+                      <ul className="project-detail-card__tags">
+                        {selectedProject.stack.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    </article>
+                  </div>
+                </>
+              ) : null}
+            </aside>
           </div>
         </section>
 

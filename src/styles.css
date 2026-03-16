@@ -353,6 +353,52 @@ img {
   margin: 0;
 }
 
+.projects-stage {
+  display: grid;
+  overflow: hidden;
+}
+
+.projects-gallery,
+.project-detail-panel {
+  grid-area: 1 / 1;
+  transition:
+    transform 560ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 360ms ease;
+}
+
+.projects-gallery {
+  min-width: 0;
+}
+
+.projects-stage.is-detail-open .projects-gallery {
+  transform: translateX(calc(-100% - 48px));
+  opacity: 0;
+  pointer-events: none;
+}
+
+.project-detail-panel {
+  display: grid;
+  align-self: start;
+  align-content: start;
+  gap: 22px;
+  padding: 28px;
+  border-radius: 34px;
+  border: 1px solid rgba(12, 13, 17, 0.08);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(240, 238, 232, 0.86)),
+    #fff;
+  box-shadow: 0 24px 60px rgba(15, 16, 22, 0.06);
+  transform: translateX(calc(100% + 48px));
+  opacity: 0;
+  pointer-events: none;
+}
+
+.projects-stage.is-detail-open .project-detail-panel {
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -441,9 +487,131 @@ img {
 .project-card__link {
   justify-self: start;
   margin-top: 4px;
+  padding: 0;
+  border: 0;
+  background: transparent;
   padding-bottom: 2px;
   border-bottom: 1px solid rgba(12, 13, 17, 0.3);
   font-weight: 700;
+  cursor: pointer;
+  color: inherit;
+  text-align: left;
+}
+
+.project-detail-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.project-detail-panel__image-wrap {
+  padding: 16px;
+  border-radius: 28px;
+  background: linear-gradient(180deg, #d9deea, #eef1f7);
+}
+
+.project-detail-panel__image {
+  overflow: hidden;
+  border-radius: 22px;
+}
+
+.project-detail-panel__image img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  object-position: center;
+}
+
+.project-detail-panel__intro {
+  display: grid;
+  gap: 10px;
+}
+
+.project-detail-panel__intro h3 {
+  margin: 0;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+  letter-spacing: -0.05em;
+  line-height: 0.95;
+}
+
+.project-detail-panel__summary {
+  margin: 0;
+  max-width: 70ch;
+  color: #4f5567;
+  font-size: 1.02rem;
+}
+
+.project-detail-panel__facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.project-detail-panel__facts article,
+.project-detail-card {
+  border-radius: 24px;
+  border: 1px solid rgba(12, 13, 17, 0.08);
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 18px 40px rgba(15, 16, 22, 0.05);
+}
+
+.project-detail-panel__facts article {
+  display: grid;
+  gap: 8px;
+  padding: 20px 22px;
+}
+
+.project-detail-panel__facts span {
+  color: #676d7d;
+  font-size: 0.88rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.project-detail-panel__facts strong {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: -0.03em;
+}
+
+.project-detail-panel__columns {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.project-detail-card {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  padding: 22px;
+}
+
+.project-detail-card p {
+  margin: 0;
+  color: #4f5567;
+}
+
+.project-detail-card ul {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding-left: 18px;
+  color: #4f5567;
+}
+
+.project-detail-card__tags {
+  padding-left: 0;
+  list-style: none;
+}
+
+.project-detail-card__tags li {
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(17, 19, 24, 0.05);
 }
 
 .services-layout {
@@ -629,6 +797,10 @@ img {
     grid-column: span 12;
   }
 
+  .project-detail-panel__columns {
+    grid-template-columns: 1fr;
+  }
+
   .logo-cloud {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -661,6 +833,19 @@ img {
 
   .hero__visual {
     min-height: 360px;
+  }
+
+  .projects-stage.is-detail-open .projects-gallery {
+    transform: translateX(calc(-100% - 24px));
+  }
+
+  .project-detail-panel {
+    padding: 22px;
+    transform: translateX(calc(100% + 24px));
+  }
+
+  .project-detail-panel__facts {
+    grid-template-columns: 1fr;
   }
 
   .hero-card--primary {
