@@ -722,9 +722,28 @@ img {
 }
 
 .service-panel li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   padding: 14px 16px;
   border-radius: 18px;
   background: rgba(17, 19, 24, 0.05);
+}
+
+.service-item__icon {
+  display: inline-grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  flex: 0 0 2rem;
+  border-radius: 999px;
+  background: rgba(17, 19, 24, 0.08);
+  color: #1f2630;
+}
+
+.service-item__icon svg {
+  width: 1rem;
+  height: 1rem;
 }
 
 .about-grid {

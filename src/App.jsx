@@ -1,4 +1,11 @@
 import { useState } from "react";
+import {
+  HiOutlineAcademicCap,
+  HiOutlineIdentification,
+  HiOutlineTrophy,
+  HiOutlineUserGroup,
+} from "react-icons/hi2";
+import { SiGit, SiGithub, SiJavascript, SiReact, SiVite } from "react-icons/si";
 import codeGraphImage from "../assets/CodeGraph.png";
 import gitEffectsImage from "../assets/git_effects.gif";
 import graphMindImage from "../assets/GraphMind.png";
@@ -160,6 +167,19 @@ const socials = [
   { label: "Dribbble", href: "https://dribbble.com/dawidpietrasiak" },
   { label: "Instagram", href: "https://www.instagram.com/dawid_pietrasiak/" },
 ];
+
+const itemIcons = {
+  React: SiReact,
+  Vite: SiVite,
+  JavaScript: SiJavascript,
+  Git: SiGit,
+  GitHub: SiGithub,
+  "BLEP Data Utilization Competition": HiOutlineTrophy,
+  "Best Paper Award, Korea Data Science Society": HiOutlineTrophy,
+  "Leadership Staff, LikeLion Club": HiOutlineUserGroup,
+  "AICS Undergraduate Researcher": HiOutlineAcademicCap,
+  "Information Processing Engineer": HiOutlineIdentification,
+};
 
 function SectionIntro({
   eyebrow,
@@ -417,9 +437,20 @@ function App() {
               <p className="eyebrow">Selected category</p>
               <h3>{services[activeService].name}</h3>
               <ul>
-                {services[activeService].items.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
+                {services[activeService].items.map((item) => {
+                  const Icon = itemIcons[item];
+
+                  return (
+                    <li key={item}>
+                      {Icon ? (
+                        <span className="service-item__icon" aria-hidden="true">
+                          <Icon />
+                        </span>
+                      ) : null}
+                      <span>{item}</span>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           </div>
