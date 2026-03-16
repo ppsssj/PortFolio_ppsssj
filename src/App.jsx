@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   HiOutlineAcademicCap,
   HiOutlineArrowLeft,
@@ -6,7 +6,20 @@ import {
   HiOutlineTrophy,
   HiOutlineUserGroup,
 } from "react-icons/hi2";
-import { SiGit, SiGithub, SiJavascript, SiReact, SiVite } from "react-icons/si";
+import {
+  SiCss,
+  SiFigma,
+  SiGit,
+  SiGithub,
+  SiHtml5,
+  SiJavascript,
+  SiNotion,
+  SiPostman,
+  SiReact,
+  SiTypescript,
+  SiVite,
+} from "react-icons/si";
+import { VscVscode } from "react-icons/vsc";
 import codeGraphImage from "../assets/CodeGraph.png";
 import gitEffectsImage from "../assets/git_effects.gif";
 import graphMindImage from "../assets/GraphMind.png";
@@ -15,11 +28,13 @@ import profileImage from "../assets/Profile.png";
 import trafficNoiseImage from "../assets/Traffic Noise Prediction System.png";
 
 const navigation = [
-  { label: "Work", href: "#work" },
-  { label: "Services", href: "#services" },
-  { label: "About", href: "#about" },
+  { label: "Projects", href: "#work" },
+  { label: "Profile", href: "#services" },
+  { label: "Story", href: "#about" },
   { label: "Contact", href: "#contact" },
 ];
+
+const sectionIds = navigation.map((item) => item.href.slice(1));
 
 const projects = [
   {
@@ -102,7 +117,12 @@ const projects = [
       "A web-based node programming system inspired by TouchDesigner, focused on real-time graph evaluation and visual pipeline composition.",
     role: "Frontend System Designer",
     focus: "Node-based runtime UI",
-    stack: ["React", "Node Graph UI", "Runtime Evaluation", "Visual Programming"],
+    stack: [
+      "React",
+      "Node Graph UI",
+      "Runtime Evaluation",
+      "Visual Programming",
+    ],
     detail:
       "PrismDesign explores how node-based visual programming can work on the web. Inspired by TouchDesigner, it focuses on building a canvas where users can compose processing pipelines visually and inspect changing states through a runtime-driven interface.",
     highlights: [
@@ -117,18 +137,11 @@ const projects = [
 const services = [
   {
     name: "Tech Stack",
-    items: [
-      "React",
-      "Vite",
-      "JavaScript",
-    ],
+    items: ["React", "Vite", "JavaScript", "HTML", "CSS", "TypeScript"],
   },
   {
     name: "Developer Tools",
-    items: [
-      "Git",
-      "GitHub",
-    ],
+    items: ["Git", "GitHub", "VS Code", "Figma", "Postman", "Notion"],
   },
   {
     name: "Awards",
@@ -142,25 +155,24 @@ const services = [
     items: [
       "Leadership Staff, LikeLion Club",
       "AICS Undergraduate Researcher",
+      "창업동아리 팀장",
     ],
   },
   {
     name: "Certification",
-    items: [
-      "Information Processing Engineer",
-    ],
+    items: ["Information Processing Engineer"],
   },
 ];
 
 const clients = [
-  "Union",
-  "Dazzle",
-  "Copay",
-  "Exodus",
-  "Ket:Ko",
-  "Notex",
-  "CareSunset",
-  "Booking",
+  "Creative",
+  "Rapid Prototyping",
+  "Fast Execution",
+  "Product Focus",
+  "Product Thinking",
+  "AI Integration",
+  "User Flow Design",
+  "initiative",
 ];
 
 const socials = [
@@ -173,18 +185,27 @@ const itemIcons = {
   React: SiReact,
   Vite: SiVite,
   JavaScript: SiJavascript,
+  HTML: SiHtml5,
+  CSS: SiCss,
+  TypeScript: SiTypescript,
   Git: SiGit,
   GitHub: SiGithub,
+  "VS Code": VscVscode,
+  Figma: SiFigma,
+  Postman: SiPostman,
+  Notion: SiNotion,
   "BLEP Data Utilization Competition": HiOutlineTrophy,
   "Best Paper Award, Korea Data Science Society": HiOutlineTrophy,
   "Leadership Staff, LikeLion Club": HiOutlineUserGroup,
   "AICS Undergraduate Researcher": HiOutlineAcademicCap,
+  "창업동아리 팀장": HiOutlineUserGroup,
   "Information Processing Engineer": HiOutlineIdentification,
 };
 
 function SectionIntro({
   eyebrow,
   title,
+  titleClassName,
   description,
   actionLabel,
   actionAriaLabel,
@@ -195,7 +216,7 @@ function SectionIntro({
     <div className="section-intro">
       <div>
         <p className="eyebrow">{eyebrow}</p>
-        <h2>{title}</h2>
+        <h2 className={titleClassName}>{title}</h2>
       </div>
       <div className="section-intro__aside">
         <p>{description}</p>
@@ -218,34 +239,99 @@ function SectionIntro({
 function App() {
   const [activeService, setActiveService] = useState(0);
   const [selectedProject, setSelectedProject] = useState(null);
+  const [activeSection, setActiveSection] = useState(sectionIds[0]);
   const isProjectDetailOpen = Boolean(selectedProject);
+  const activeSectionIndex = Math.max(sectionIds.indexOf(activeSection), 0);
+
+  useEffect(() => {
+    const sections = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
+
+    if (!sections.length) {
+      return undefined;
+    }
+
+    const updateActiveSection = () => {
+      const scrollAnchor = window.scrollY + window.innerHeight * 0.38;
+      let currentSection = sectionIds[0];
+
+      sections.forEach((section) => {
+        if (section.offsetTop <= scrollAnchor) {
+          currentSection = section.id;
+        }
+      });
+
+      setActiveSection(currentSection);
+    };
+
+    updateActiveSection();
+    window.addEventListener("scroll", updateActiveSection, { passive: true });
+    window.addEventListener("resize", updateActiveSection);
+
+    return () => {
+      window.removeEventListener("scroll", updateActiveSection);
+      window.removeEventListener("resize", updateActiveSection);
+    };
+  }, [sectionIds]);
 
   return (
     <div className="page-shell">
       <div className="page-glow page-glow--left" />
       <div className="page-glow page-glow--right" />
 
+      <nav
+        className="section-rail"
+        aria-label="Section navigation"
+        style={{ "--active-index": activeSectionIndex }}
+      >
+        <div className="section-rail__inner">
+          <p className="section-rail__eyebrow"></p>
+          <div className="section-rail__list">
+            <span className="section-rail__track" aria-hidden="true" />
+            <span className="section-rail__thumb" aria-hidden="true" />
+            {navigation.map((item) => {
+              const isActive = activeSection === item.href.slice(1);
+
+              return (
+                <a
+                  key={item.href}
+                  className={`section-rail__link${isActive ? " is-active" : ""}`}
+                  href={item.href}
+                  aria-current={isActive ? "location" : undefined}
+                >
+                  {item.label}
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      </nav>
+
       <header className="site-header">
         <a className="brand" href="#top">
           PPsssJ.
         </a>
-
-        <nav className="site-nav" aria-label="Primary navigation">
-          {navigation.map((item) => (
-            <a key={item.href} href={item.href}>
-              {item.label}
-            </a>
-          ))}
-        </nav>
       </header>
 
       <main id="top">
         <section className="hero">
           <div className="hero__copy">
             <p className="eyebrow">Frontend • AI Experiences</p>
-            <h1>Building interactive products with frontend and AI.</h1>
+            <h1
+              className="hero__headline"
+              aria-label="Building interactive products with frontend and AI."
+            >
+              <span className="hero__word hero__word--soft">Building</span>
+              <span className="hero__word hero__word--strong">interactive</span>
+              <span className="hero__word hero__word--strong">products</span>
+              <span className="hero__word hero__word--soft">with</span>
+              <span className="hero__word hero__word--strong">frontend</span>
+              <span className="hero__word hero__word--strong">AI.</span>
+            </h1>
             <p className="hero__description">
-              A portfolio focused on frontend engineering, interactive experiences, and turning ideas into real products.
+              A portfolio focused on frontend engineering, interactive
+              experiences, and turning ideas into real products.
             </p>
             <div className="hero__actions">
               <a className="primary-button" href="#work">
@@ -257,27 +343,23 @@ function App() {
             </div>
             <dl className="hero__stats">
               <div>
-                <dt>05</dt>
-                <dd>Featured projects</dd>
+                <dt>Interactive</dt>
+                <dd>Product-focused builds</dd>
               </div>
               <div>
-                <dt>04</dt>
-                <dd>Core services</dd>
+                <dt>Frontend + AI</dt>
+                <dd>Interfaces with intelligence</dd>
               </div>
               <div>
                 <dt>End-to-end</dt>
-                <dd>Idea → Design → Build</dd>
+                <dd>Idea • Design • Build</dd>
               </div>
             </dl>
           </div>
 
           <div className="hero__visual" aria-hidden="true">
             <div className="hero-card hero-card--primary">
-              <img
-                src={profileImage}
-                alt={projects[0].title}
-                loading="eager"
-              />
+              <img src={profileImage} alt={projects[0].title} loading="eager" />
             </div>
             <div className="hero-card hero-card--accent">
               <span>Frontend systems</span>
@@ -293,7 +375,35 @@ function App() {
         <section className="projects-section" id="work">
           <SectionIntro
             eyebrow="From Idea to Interface"
-            title="A selection of projects built to test concepts, refine user flows, and ship usable products."
+            titleClassName="section-title section-title--mixed"
+            title={
+              <>
+                <span className="section-title__word section-title__word--soft">
+                  Projects
+                </span>
+                <span className="section-title__word section-title__word--soft">
+                  built to explore
+                </span>
+                <span className="section-title__word section-title__word--strong">
+                  ideas,
+                </span>
+                <span className="section-title__word section-title__word--soft">
+                  refine
+                </span>
+                <span className="section-title__word section-title__word--strong">
+                  experiences,
+                </span>
+                <span className="section-title__word section-title__word--soft">
+                  and
+                </span>
+                <span className="section-title__word section-title__word--soft">
+                  deliver
+                </span>
+                <span className="section-title__word section-title__word--strong">
+                  usable products.
+                </span>
+              </>
+            }
             description="Selected projects that reflect how I approach interaction design, frontend systems, and developer-focused product thinking."
             actionLabel={<SiGithub />}
             actionAriaLabel="View my GitHub profile"
@@ -313,7 +423,11 @@ function App() {
                   >
                     <div className="project-card__image-wrap">
                       <div className="project-card__media">
-                        <img src={project.image} alt={project.title} loading="lazy" />
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          loading="lazy"
+                        />
                       </div>
                     </div>
                     <div className="project-card__content">
@@ -440,7 +554,9 @@ function App() {
                     aria-pressed={isActive}
                   >
                     <span>{service.name}</span>
-                    <span>{String(service.items.length).padStart(2, "0")}</span>
+                    <span className="service-trigger__arrow" aria-hidden="true">
+                      &gt;
+                    </span>
                   </button>
                 );
               })}
@@ -449,7 +565,14 @@ function App() {
             <div className="service-panel">
               <p className="eyebrow">Selected category</p>
               <h3>{services[activeService].name}</h3>
-              <ul>
+              <ul
+                className={
+                  services[activeService].name === "Tech Stack" ||
+                  services[activeService].name === "Developer Tools"
+                    ? "service-panel__list service-panel__list--grid"
+                    : "service-panel__list"
+                }
+              >
                 {services[activeService].items.map((item) => {
                   const Icon = itemIcons[item];
 
@@ -472,7 +595,32 @@ function App() {
         <section className="about-section" id="about">
           <SectionIntro
             eyebrow="Our Story"
-            title="Explore our journey and learn what sets us apart in crafting impactful digital experiences."
+            titleClassName="section-title section-title--mixed"
+            title={
+              <>
+                <span className="section-title__word section-title__word--soft">
+                  A
+                </span>
+                <span className="section-title__word section-title__word--strong">
+                  frontend-focused
+                </span>
+                <span className="section-title__word section-title__word--soft">
+                  builder who turns
+                </span>
+                <span className="section-title__word section-title__word--strong">
+                  creative ideas
+                </span>
+                <span className="section-title__word section-title__word--soft">
+                  into
+                </span>
+                <span className="section-title__word section-title__word--strong">
+                  interactive,
+                </span>
+                <span className="section-title__word section-title__word--strong">
+                  usable products.
+                </span>
+              </>
+            }
             description="The original page used custom SVG logos and heavy layout wrappers. Here, the same idea is kept with a lighter, editable component structure."
             actionLabel="See contact"
             actionHref="#contact"
@@ -480,12 +628,12 @@ function App() {
 
           <div className="about-grid">
             <article className="about-card">
-              <h3>Why this version is better to maintain</h3>
+              <h3>How I build products</h3>
               <p>
-                Content, project cards, navigation, and services now live as
-                plain JavaScript data. That means you can swap copy, reorder
-                sections, or connect an API later without fighting a 17,000-line
-                export.
+                I approach product building through rapid prototyping,
+                interactive frontend development, and practical iteration.
+                Rather than stopping at ideas, I focus on shaping concepts into
+                clear user flows and usable interfaces.
               </p>
             </article>
 
@@ -542,7 +690,7 @@ function App() {
         </div>
 
         <div className="site-footer__bottom">
-          <span>2026 ppsssj</span>
+          <span>© 2026 PPsssJ. All rights reserved.</span>
         </div>
       </footer>
     </div>
