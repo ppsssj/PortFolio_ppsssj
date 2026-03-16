@@ -499,7 +499,6 @@ function App() {
 
         <div className="site-footer__bottom">
           <span>2026 ppsssj</span>
-          <span>Rebuilt with React + Vite</span>
         </div>
       </footer>
     </div>
