@@ -183,6 +183,30 @@ img {
   margin: 22px 0 0;
 }
 
+.hero__copy > * {
+  animation: heroCopySlideIn 720ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero__copy > :nth-child(1) {
+  animation-delay: 40ms;
+}
+
+.hero__copy > :nth-child(2) {
+  animation-delay: 110ms;
+}
+
+.hero__copy > :nth-child(3) {
+  animation-delay: 180ms;
+}
+
+.hero__copy > :nth-child(4) {
+  animation-delay: 250ms;
+}
+
+.hero__copy > :nth-child(5) {
+  animation-delay: 320ms;
+}
+
 .hero__actions {
   display: flex;
   flex-wrap: wrap;
@@ -271,6 +295,7 @@ img {
   border-radius: 30px;
   background: rgba(255, 255, 255, 0.68);
   backdrop-filter: blur(22px);
+  animation: heroCardSlideIn 760ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .hero-card--primary {
@@ -300,6 +325,7 @@ img {
   min-height: 180px;
   background: linear-gradient(180deg, #0d0f13, #1f2630);
   color: #f5f3ee;
+  animation-delay: 120ms;
 }
 
 .hero-card--outline {
@@ -310,6 +336,7 @@ img {
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(237, 235, 229, 0.78)),
     #fff;
+  animation-delay: 220ms;
 }
 
 .hero-card span {
@@ -322,6 +349,30 @@ img {
   font-family: "Space Grotesk", sans-serif;
   font-size: 1.3rem;
   line-height: 1.1;
+}
+
+@keyframes heroCardSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(34px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes heroCopySlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .projects-section,
@@ -872,5 +923,15 @@ img {
   .site-footer__bottom {
     flex-direction: column;
     align-items: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__copy > * {
+    animation: none;
+  }
+
+  .hero-card {
+    animation: none;
   }
 }
