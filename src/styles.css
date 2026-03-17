@@ -311,27 +311,27 @@ img {
 }
 
 .hero__copy>* {
-  animation: heroCopySlideIn 720ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: heroCopySlideIn 1040ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .hero__copy> :nth-child(1) {
-  animation-delay: 40ms;
+  animation-delay: 80ms;
 }
 
 .hero__copy> :nth-child(2) {
-  animation-delay: 110ms;
-}
-
-.hero__copy> :nth-child(3) {
   animation-delay: 180ms;
 }
 
+.hero__copy> :nth-child(3) {
+  animation-delay: 280ms;
+}
+
 .hero__copy> :nth-child(4) {
-  animation-delay: 250ms;
+  animation-delay: 380ms;
 }
 
 .hero__copy> :nth-child(5) {
-  animation-delay: 320ms;
+  animation-delay: 480ms;
 }
 
 .hero__actions {
@@ -434,7 +434,7 @@ img {
   border-radius: 30px;
   background: rgba(255, 255, 255, 0.68);
   backdrop-filter: blur(22px);
-  animation: heroCardSlideIn 760ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: heroCardSlideIn 1120ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .hero-card--primary {
@@ -464,7 +464,7 @@ img {
   min-height: 180px;
   background: linear-gradient(180deg, #0d0f13, #1f2630);
   color: #f5f3ee;
-  animation-delay: 120ms;
+  animation-delay: 220ms;
 }
 
 .hero-card--outline {
@@ -475,7 +475,7 @@ img {
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(237, 235, 229, 0.78)),
     #fff;
-  animation-delay: 220ms;
+  animation-delay: 360ms;
 }
 
 .hero-card span {
@@ -518,6 +518,33 @@ img {
 .services-section,
 .about-section {
   padding: 0 0 88px;
+}
+
+.reveal-item {
+  opacity: 0;
+  will-change: transform, opacity;
+  transition:
+    opacity 1080ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1080ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal-item--side {
+  transform: translate3d(42px, 0, 0);
+}
+
+.reveal-item--up {
+  transform: translate3d(0, 40px, 0);
+}
+
+.reveal-item--fade {
+  transform: translate3d(0, 18px, 0);
+}
+
+.reveal-item.is-visible,
+.reveal-section.is-visible .reveal-item:not([data-reveal-self]) {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
 }
 
 .section-intro {
@@ -622,8 +649,13 @@ img {
   gap: 20px;
 }
 
+.project-card-shell {
+  min-width: 0;
+}
+
 .project-card {
   display: grid;
+  height: 100%;
   overflow: hidden;
   border-radius: 30px;
   background: rgba(255, 255, 255, 0.64);
@@ -972,11 +1004,27 @@ img {
 .site-footer {
   margin-bottom: 28px;
   padding: 34px;
+  overflow: hidden;
   border-radius: 34px;
   color: #f5f3ee;
   background:
     radial-gradient(circle at top right, rgba(96, 122, 255, 0.25), transparent 30%),
     linear-gradient(180deg, #0c0d11, #13171f);
+}
+
+.site-footer.reveal-section {
+  opacity: 0;
+  transform: scale3d(1, 0.08, 1);
+  transform-origin: top center;
+  will-change: transform, opacity;
+  transition:
+    opacity 320ms ease,
+    transform 1240ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.site-footer.reveal-section.is-visible {
+  opacity: 1;
+  transform: scale3d(1, 1, 1);
 }
 
 .site-footer__content {
@@ -1205,6 +1253,13 @@ img {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .reveal-item,
+  .site-footer.reveal-section {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
   .hero__copy>* {
     animation: none;
   }

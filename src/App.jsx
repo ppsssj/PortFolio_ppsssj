@@ -154,6 +154,77 @@ function App() {
   }, [locale]);
 
   useEffect(() => {
+    const revealSections = Array.from(
+      document.querySelectorAll("[data-reveal-section]")
+    );
+    const revealItems = Array.from(document.querySelectorAll("[data-reveal-self]"));
+
+    if (!revealSections.length && !revealItems.length) {
+      return undefined;
+    }
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    if (reduceMotion.matches) {
+      revealSections.forEach((section) => {
+        section.classList.add("is-visible");
+      });
+      revealItems.forEach((item) => {
+        item.classList.add("is-visible");
+      });
+
+      return undefined;
+    }
+
+    const sectionObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          entry.target.classList.add("is-visible");
+          sectionObserver.unobserve(entry.target);
+        });
+      },
+      {
+        threshold: 0.2,
+        rootMargin: "0px 0px -8% 0px",
+      }
+    );
+
+    revealSections.forEach((section) => {
+      sectionObserver.observe(section);
+    });
+
+    const itemObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          entry.target.classList.add("is-visible");
+          itemObserver.unobserve(entry.target);
+        });
+      },
+      {
+        threshold: 0.35,
+        rootMargin: "0px 0px -10% 0px",
+      }
+    );
+
+    revealItems.forEach((item) => {
+      itemObserver.observe(item);
+    });
+
+    return () => {
+      sectionObserver.disconnect();
+      itemObserver.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
     const sections = sectionIds
       .map((id) => document.getElementById(id))
       .filter(Boolean);
@@ -285,233 +356,287 @@ function App() {
           </div>
         </section>
 
-        <section className="projects-section" id="work">
-          <SectionIntro
-            eyebrow={ui.projects.eyebrow}
-            titleClassName="section-title section-title--mixed"
-            title={renderParts(ui.projects.titleParts, "section-title__word")}
-            description={ui.projects.description}
-            actionLabel={<SiGithub />}
-            actionAriaLabel={ui.projects.githubAriaLabel}
-            actionHref="https://github.com/ppsssj"
-            actionExternal
-          />
+        <section
+          className="projects-section reveal-section"
+          id="work"
+          data-reveal-section
+        >
+          <div
+            className="reveal-item reveal-item--side"
+            style={{ "--reveal-delay": "90ms" }}
+          >
+            <SectionIntro
+              eyebrow={ui.projects.eyebrow}
+              titleClassName="section-title section-title--mixed"
+              title={renderParts(ui.projects.titleParts, "section-title__word")}
+              description={ui.projects.description}
+              actionLabel={<SiGithub />}
+              actionAriaLabel={ui.projects.githubAriaLabel}
+              actionHref="https://github.com/ppsssj"
+              actionExternal
+            />
+          </div>
 
           <div
-            className={`projects-stage${isProjectDetailOpen ? " is-detail-open" : ""}`}
+            className="reveal-item reveal-item--side"
+            style={{ "--reveal-delay": "240ms" }}
           >
-            <div className="projects-gallery" aria-hidden={isProjectDetailOpen}>
-              <div className="projects-grid">
-                {projects.map((project, index) => (
-                  <article
-                    key={project.id}
-                    className={`project-card project-card--${(index % 3) + 1}`}
-                  >
-                    <div className="project-card__image-wrap">
-                      <div className="project-card__media">
+            <div
+              className={`projects-stage${isProjectDetailOpen ? " is-detail-open" : ""}`}
+            >
+              <div className="projects-gallery" aria-hidden={isProjectDetailOpen}>
+                <div className="projects-grid">
+                  {projects.map((project, index) => (
+                    <div
+                      key={project.id}
+                      className={`project-card-shell project-card--${(index % 3) + 1} reveal-item reveal-item--up`}
+                      style={{ "--reveal-delay": `${index * 120}ms` }}
+                      data-reveal-self
+                    >
+                      <article className="project-card">
+                        <div className="project-card__image-wrap">
+                          <div className="project-card__media">
+                            <img
+                              src={project.image}
+                              alt={project.title}
+                              loading="lazy"
+                            />
+                          </div>
+                        </div>
+                        <div className="project-card__content">
+                          <p>{project.client}</p>
+                          <h3>{project.title}</h3>
+                          <span>{project.summary}</span>
+                          <button
+                            type="button"
+                            className="project-card__link"
+                            onClick={() => setSelectedProjectId(project.id)}
+                          >
+                            {ui.projects.discussLabel}
+                          </button>
+                        </div>
+                      </article>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <aside
+                className="project-detail-panel"
+                aria-live="polite"
+                aria-hidden={!isProjectDetailOpen}
+              >
+                {selectedProject ? (
+                  <>
+                    <div className="project-detail-panel__header">
+                      <button
+                        type="button"
+                        className="ghost-button icon-button project-detail-panel__back"
+                        onClick={() => setSelectedProjectId(null)}
+                        aria-label={ui.projects.backLabel}
+                      >
+                        <HiOutlineArrowLeft />
+                      </button>
+                      <a
+                        className="ghost-button icon-button project-detail-panel__repo"
+                        href={selectedProject.link}
+                        aria-label={ui.projects.repoAriaLabel(selectedProject.title)}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <SiGithub />
+                      </a>
+                    </div>
+
+                    <div className="project-detail-panel__image-wrap">
+                      <div className="project-detail-panel__image">
                         <img
-                          src={project.image}
-                          alt={project.title}
+                          src={selectedProject.image}
+                          alt={selectedProject.title}
                           loading="lazy"
                         />
                       </div>
                     </div>
-                    <div className="project-card__content">
-                      <p>{project.client}</p>
-                      <h3>{project.title}</h3>
-                      <span>{project.summary}</span>
-                      <button
-                        type="button"
-                        className="project-card__link"
-                        onClick={() => setSelectedProjectId(project.id)}
-                      >
-                        {ui.projects.discussLabel}
-                      </button>
+
+                    <div className="project-detail-panel__intro">
+                      <p className="eyebrow">{selectedProject.client}</p>
+                      <h3>{selectedProject.title}</h3>
+                      <p className="project-detail-panel__summary">
+                        {selectedProject.detail}
+                      </p>
                     </div>
-                  </article>
+
+                    <div className="project-detail-panel__facts">
+                      <article>
+                        <span>{ui.projects.facts.role}</span>
+                        <strong>{selectedProject.role}</strong>
+                      </article>
+                      <article>
+                        <span>{ui.projects.facts.focus}</span>
+                        <strong>{selectedProject.focus}</strong>
+                      </article>
+                    </div>
+
+                    <div className="project-detail-panel__columns">
+                      <article className="project-detail-card">
+                        <p className="eyebrow">{ui.projects.detailCards.summary}</p>
+                        <p>{selectedProject.summary}</p>
+                      </article>
+
+                      <article className="project-detail-card">
+                        <p className="eyebrow">
+                          {ui.projects.detailCards.highlights}
+                        </p>
+                        <ul>
+                          {selectedProject.highlights.map((item) => (
+                            <li key={item}>{item}</li>
+                          ))}
+                        </ul>
+                      </article>
+
+                      <article className="project-detail-card">
+                        <p className="eyebrow">{ui.projects.detailCards.stack}</p>
+                        <ul className="project-detail-card__tags">
+                          {selectedProject.stack.map((item) => (
+                            <li key={item}>{item}</li>
+                          ))}
+                        </ul>
+                      </article>
+                    </div>
+                  </>
+                ) : null}
+              </aside>
+            </div>
+          </div>
+        </section>
+
+        <section
+          className="services-section reveal-section"
+          id="services"
+          data-reveal-section
+        >
+          <div
+            className="reveal-item reveal-item--side"
+            style={{ "--reveal-delay": "90ms" }}
+          >
+            <SectionIntro
+              eyebrow={ui.profile.eyebrow}
+              title={ui.profile.title}
+              description={ui.profile.description}
+            />
+          </div>
+
+          <div
+            className="reveal-item reveal-item--side"
+            style={{ "--reveal-delay": "240ms" }}
+          >
+            <div className="services-layout">
+              <div
+                className="services-list"
+                role="tablist"
+                aria-label={ui.profile.tabAriaLabel}
+              >
+                {services.map((service, index) => {
+                  const isActive = activeService === index;
+
+                  return (
+                    <button
+                      key={service.key}
+                      type="button"
+                      className={`service-trigger${isActive ? " is-active" : ""}`}
+                      onClick={() => setActiveService(index)}
+                      aria-pressed={isActive}
+                    >
+                      <span>{service.name}</span>
+                      <span className="service-trigger__arrow" aria-hidden="true">
+                        &gt;
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="service-panel">
+                <p className="eyebrow">{ui.profile.selectedLabel}</p>
+                <h3>{services[activeService].name}</h3>
+                <ul
+                  className={
+                    services[activeService].key === "tech_stack" ||
+                    services[activeService].key === "developer_tools"
+                      ? "service-panel__list service-panel__list--grid"
+                      : "service-panel__list"
+                  }
+                >
+                  {services[activeService].items.map((item) => {
+                    const Icon = itemIcons[item.key];
+
+                    return (
+                      <li key={item.key}>
+                        {Icon ? (
+                          <span className="service-item__icon" aria-hidden="true">
+                            <Icon />
+                          </span>
+                        ) : null}
+                        <span>{item.label}</span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section
+          className="about-section reveal-section"
+          id="about"
+          data-reveal-section
+        >
+          <div
+            className="reveal-item reveal-item--side"
+            style={{ "--reveal-delay": "90ms" }}
+          >
+            <SectionIntro
+              eyebrow={ui.story.eyebrow}
+              titleClassName="section-title section-title--mixed"
+              title={renderParts(ui.story.titleParts, "section-title__word")}
+              description={ui.story.description}
+              actionLabel={<HiOutlineEnvelope />}
+              actionAriaLabel={ui.story.contactAriaLabel}
+              actionHref="#contact"
+            />
+          </div>
+
+          <div
+            className="reveal-item reveal-item--side"
+            style={{ "--reveal-delay": "240ms" }}
+          >
+            <div className="about-grid">
+              <article className="about-card">
+                <h3>{ui.story.cardTitle}</h3>
+                <p>{ui.story.cardCopy}</p>
+              </article>
+
+              <div className="logo-cloud" aria-label={ui.story.keywordsAriaLabel}>
+                {keywordLabels[locale].map((item) => (
+                  <span key={item}>{item}</span>
                 ))}
               </div>
             </div>
-
-            <aside
-              className="project-detail-panel"
-              aria-live="polite"
-              aria-hidden={!isProjectDetailOpen}
-            >
-              {selectedProject ? (
-                <>
-                  <div className="project-detail-panel__header">
-                    <button
-                      type="button"
-                      className="ghost-button icon-button project-detail-panel__back"
-                      onClick={() => setSelectedProjectId(null)}
-                      aria-label={ui.projects.backLabel}
-                    >
-                      <HiOutlineArrowLeft />
-                    </button>
-                    <a
-                      className="ghost-button icon-button project-detail-panel__repo"
-                      href={selectedProject.link}
-                      aria-label={ui.projects.repoAriaLabel(selectedProject.title)}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <SiGithub />
-                    </a>
-                  </div>
-
-                  <div className="project-detail-panel__image-wrap">
-                    <div className="project-detail-panel__image">
-                      <img
-                        src={selectedProject.image}
-                        alt={selectedProject.title}
-                        loading="lazy"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="project-detail-panel__intro">
-                    <p className="eyebrow">{selectedProject.client}</p>
-                    <h3>{selectedProject.title}</h3>
-                    <p className="project-detail-panel__summary">
-                      {selectedProject.detail}
-                    </p>
-                  </div>
-
-                  <div className="project-detail-panel__facts">
-                    <article>
-                      <span>{ui.projects.facts.role}</span>
-                      <strong>{selectedProject.role}</strong>
-                    </article>
-                    <article>
-                      <span>{ui.projects.facts.focus}</span>
-                      <strong>{selectedProject.focus}</strong>
-                    </article>
-                  </div>
-
-                  <div className="project-detail-panel__columns">
-                    <article className="project-detail-card">
-                      <p className="eyebrow">{ui.projects.detailCards.summary}</p>
-                      <p>{selectedProject.summary}</p>
-                    </article>
-
-                    <article className="project-detail-card">
-                      <p className="eyebrow">
-                        {ui.projects.detailCards.highlights}
-                      </p>
-                      <ul>
-                        {selectedProject.highlights.map((item) => (
-                          <li key={item}>{item}</li>
-                        ))}
-                      </ul>
-                    </article>
-
-                    <article className="project-detail-card">
-                      <p className="eyebrow">{ui.projects.detailCards.stack}</p>
-                      <ul className="project-detail-card__tags">
-                        {selectedProject.stack.map((item) => (
-                          <li key={item}>{item}</li>
-                        ))}
-                      </ul>
-                    </article>
-                  </div>
-                </>
-              ) : null}
-            </aside>
           </div>
         </section>
 
-        <section className="services-section" id="services">
-          <SectionIntro
-            eyebrow={ui.profile.eyebrow}
-            title={ui.profile.title}
-            description={ui.profile.description}
-          />
-
-          <div className="services-layout">
-            <div
-              className="services-list"
-              role="tablist"
-              aria-label={ui.profile.tabAriaLabel}
-            >
-              {services.map((service, index) => {
-                const isActive = activeService === index;
-
-                return (
-                  <button
-                    key={service.key}
-                    type="button"
-                    className={`service-trigger${isActive ? " is-active" : ""}`}
-                    onClick={() => setActiveService(index)}
-                    aria-pressed={isActive}
-                  >
-                    <span>{service.name}</span>
-                    <span className="service-trigger__arrow" aria-hidden="true">
-                      &gt;
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-
-            <div className="service-panel">
-              <p className="eyebrow">{ui.profile.selectedLabel}</p>
-              <h3>{services[activeService].name}</h3>
-              <ul
-                className={
-                  services[activeService].key === "tech_stack" ||
-                  services[activeService].key === "developer_tools"
-                    ? "service-panel__list service-panel__list--grid"
-                    : "service-panel__list"
-                }
-              >
-                {services[activeService].items.map((item) => {
-                  const Icon = itemIcons[item.key];
-
-                  return (
-                    <li key={item.key}>
-                      {Icon ? (
-                        <span className="service-item__icon" aria-hidden="true">
-                          <Icon />
-                        </span>
-                      ) : null}
-                      <span>{item.label}</span>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <section className="about-section" id="about">
-          <SectionIntro
-            eyebrow={ui.story.eyebrow}
-            titleClassName="section-title section-title--mixed"
-            title={renderParts(ui.story.titleParts, "section-title__word")}
-            description={ui.story.description}
-            actionLabel={<HiOutlineEnvelope />}
-            actionAriaLabel={ui.story.contactAriaLabel}
-            actionHref="#contact"
-          />
-
-          <div className="about-grid">
-            <article className="about-card">
-              <h3>{ui.story.cardTitle}</h3>
-              <p>{ui.story.cardCopy}</p>
-            </article>
-
-            <div className="logo-cloud" aria-label={ui.story.keywordsAriaLabel}>
-              {keywordLabels[locale].map((item) => (
-                <span key={item}>{item}</span>
-              ))}
-            </div>
-          </div>
-        </section>
       </main>
 
-      <footer className="site-footer" id="contact">
-        <div className="site-footer__content">
+      <footer
+        className="site-footer reveal-section"
+        id="contact"
+        data-reveal-section
+      >
+        <div
+          className="site-footer__content reveal-item reveal-item--fade"
+          style={{ "--reveal-delay": "220ms" }}
+        >
           <div>
             <p className="eyebrow eyebrow--light">{ui.footer.eyebrow}</p>
             <h2>{ui.footer.title}</h2>
@@ -558,7 +683,10 @@ function App() {
           </div>
         </div>
 
-        <div className="site-footer__bottom">
+        <div
+          className="site-footer__bottom reveal-item reveal-item--fade"
+          style={{ "--reveal-delay": "360ms" }}
+        >
           <span>{ui.footer.rights}</span>
         </div>
       </footer>
