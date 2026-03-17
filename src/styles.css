@@ -143,7 +143,7 @@ img {
 .section-rail {
   position: fixed;
   top: 50%;
-  right: 10px;
+  right: 18px;
   z-index: 20;
   transform: translateY(-50%);
   opacity: 0.5;
@@ -249,7 +249,7 @@ img {
 
 .eyebrow {
   margin: 0 0 12px;
-  font-size: 0.82rem;
+  font-size: 0.76rem;
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -298,7 +298,6 @@ img {
 }
 
 .hero__description,
-.section-intro p,
 .about-card p,
 .site-footer__copy {
   color: #4f5567;
@@ -591,6 +590,8 @@ img {
 
 .section-intro__aside p {
   margin: 0;
+  color: #4f5567;
+  font-size: 1.05rem;
 }
 
 .section-intro__aside .icon-button {
@@ -1105,7 +1106,13 @@ img {
 
 @media (min-width: 1121px) {
   .page-shell {
-    padding-right: 92px;
+    padding-right: 124px;
+  }
+
+  .site-header {
+    gap: 18px;
+    padding-top: 4px;
+    padding-bottom: 12px;
   }
 
   .site-header,
@@ -1114,9 +1121,152 @@ img {
   .services-section,
   .about-section,
   .site-footer {
-    width: min(1140px, calc(100vw - 128px));
-    margin-left: max(24px, calc((100vw - 1240px) / 2));
+    width: min(1320px, calc(100vw - 168px));
+    margin-left: max(28px, calc((100vw - 1448px) / 2));
     margin-right: auto;
+  }
+
+  .section-rail {
+    right: 28px;
+  }
+
+  .hero {
+    grid-template-columns: minmax(0, 1fr) minmax(420px, 1.08fr);
+    gap: 52px;
+    min-height: calc(100svh - 68px);
+    padding-top: 24px;
+    padding-bottom: 76px;
+  }
+
+  .hero h1 {
+    font-size: clamp(3.45rem, 6.1vw, 6.5rem);
+    max-width: 12ch;
+  }
+
+  .hero__description {
+    max-width: 42rem;
+    margin-top: 18px;
+    font-size: 1.04rem;
+  }
+
+  .hero__stats {
+    gap: 16px;
+    margin-top: 28px;
+  }
+
+  .hero__stats div {
+    padding: 18px 19px;
+    border-radius: 24px;
+  }
+
+  .hero__stats dt {
+    font-size: 1.6rem;
+  }
+
+  .hero__visual {
+    min-height: 560px;
+    transform: translateY(-8px);
+  }
+
+  .hero-card--primary {
+    inset: 0 44px 76px 0;
+  }
+
+  .hero-card--accent {
+    width: 220px;
+    min-height: 176px;
+    padding: 22px;
+  }
+
+  .hero-card--outline {
+    left: 10px;
+    width: 256px;
+    min-height: 142px;
+    padding: 22px;
+  }
+
+  .projects-section,
+  .services-section,
+  .about-section {
+    padding-bottom: 104px;
+  }
+
+  .section-intro {
+    gap: 32px;
+    margin-bottom: 34px;
+  }
+
+  .section-intro h2 {
+    max-width: 13ch;
+  }
+
+  .projects-grid {
+    gap: 24px;
+  }
+
+  .project-card {
+    border-radius: 34px;
+  }
+
+  .project-card__image-wrap {
+    padding: 16px;
+  }
+
+  .project-card__content {
+    padding: 26px;
+  }
+
+  .project-card__content h3,
+  .service-panel h3,
+  .about-card h3 {
+    font-size: 1.8rem;
+  }
+
+  .service-trigger {
+    padding: 24px 26px;
+    border-radius: 28px;
+  }
+
+  .service-panel {
+    padding: 34px;
+    border-radius: 34px;
+  }
+
+  .about-grid {
+    gap: 24px;
+  }
+
+  .about-card,
+  .logo-cloud {
+    border-radius: 34px;
+  }
+
+  .about-card {
+    padding: 34px;
+  }
+
+  .logo-cloud {
+    gap: 18px;
+    padding: 34px;
+  }
+
+  .logo-cloud span {
+    min-height: 106px;
+    border-radius: 22px;
+  }
+
+  .site-footer {
+    padding: 42px;
+    border-radius: 38px;
+  }
+
+  .site-footer__content {
+    grid-template-columns: minmax(0, 1.08fr) minmax(340px, 0.92fr);
+    gap: 32px;
+  }
+
+  .site-footer h2 {
+    max-width: 11ch;
   }
 }
 

@@ -234,6 +234,14 @@ function App() {
     }
 
     const updateActiveSection = () => {
+      const viewportBottom = window.scrollY + window.innerHeight;
+      const pageBottom = document.documentElement.scrollHeight;
+
+      if (viewportBottom >= pageBottom - 12) {
+        setActiveSection(sectionIds[sectionIds.length - 1]);
+        return;
+      }
+
       const scrollAnchor = window.scrollY + window.innerHeight * 0.38;
       let currentSection = sectionIds[0];
 
