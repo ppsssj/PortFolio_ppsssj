@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import {
   HiOutlineAcademicCap,
   HiOutlineArrowLeft,
-  HiOutlineAtSymbol,
   HiOutlineEnvelope,
   HiOutlineIdentification,
   HiOutlineTrophy,
@@ -12,9 +11,11 @@ import {
   SiCss,
   SiFigma,
   SiGit,
+  SiGmail,
   SiGithub,
   SiHtml5,
   SiJavascript,
+  SiNaver,
   SiNotion,
   SiPostman,
   SiReact,
@@ -70,8 +71,8 @@ const itemIcons = {
 };
 
 const footerSocialIcons = {
-  Gmail: HiOutlineEnvelope,
-  "Naver Mail": HiOutlineAtSymbol,
+  Gmail: SiGmail,
+  "Naver Mail": SiNaver,
   GitHub: SiGithub,
 };
 
@@ -120,6 +121,36 @@ function SectionIntro({
   );
 }
 
+function LanguageToggle({
+  locale,
+  labels,
+  ariaLabel,
+  onChange,
+  className = "",
+}) {
+  return (
+    <div
+      className={`language-toggle ${className}`.trim()}
+      role="group"
+      aria-label={ariaLabel}
+    >
+      {["en", "kr"].map((code) => (
+        <button
+          key={code}
+          type="button"
+          className={`language-toggle__button${
+            locale === code ? " is-active" : ""
+          }`}
+          onClick={() => onChange(code)}
+          aria-pressed={locale === code}
+        >
+          {labels[code]}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 function App() {
   const [locale, setLocale] = useState("en");
   const [activeService, setActiveService] = useState(0);
@@ -148,6 +179,7 @@ function App() {
     projects.find((project) => project.id === selectedProjectId) ?? null;
   const isProjectDetailOpen = Boolean(selectedProject);
   const activeSectionIndex = Math.max(sectionIds.indexOf(activeSection), 0);
+  const socialRailLabel = locale === "kr" ? "소셜 링크" : "Social links";
 
   useEffect(() => {
     document.documentElement.lang = locale === "kr" ? "ko" : "en";
@@ -269,12 +301,43 @@ function App() {
       <div className="page-glow page-glow--left" />
       <div className="page-glow page-glow--right" />
 
+      <nav className="social-rail" aria-label={socialRailLabel}>
+        <div className="social-rail__inner">
+          {socials.map((item) => {
+            const Icon = footerSocialIcons[item.label];
+            const isExternal = item.href.startsWith("http");
+
+            return (
+              <a
+                key={item.label}
+                className="social-rail__link"
+                href={item.href}
+                target={isExternal ? "_blank" : undefined}
+                rel={isExternal ? "noreferrer" : undefined}
+                aria-label={item.label}
+                title={item.label}
+              >
+                {Icon ? <Icon /> : null}
+                <span>{item.label}</span>
+              </a>
+            );
+          })}
+        </div>
+      </nav>
+
       <nav
         className="section-rail"
         aria-label={ui.sectionRailLabel}
         style={{ "--active-index": activeSectionIndex }}
       >
         <div className="section-rail__inner">
+          <LanguageToggle
+            locale={locale}
+            labels={ui.languageLabels}
+            ariaLabel={ui.languageToggleLabel}
+            onChange={setLocale}
+            className="language-toggle--rail"
+          />
           <p className="section-rail__eyebrow">{ui.sectionRailEyebrow}</p>
           <div className="section-rail__list">
             <span className="section-rail__track" aria-hidden="true" />
@@ -302,25 +365,13 @@ function App() {
           PPsssJ.
         </a>
 
-        <div
-          className="language-toggle"
-          role="group"
-          aria-label={ui.languageToggleLabel}
-        >
-          {["en", "kr"].map((code) => (
-            <button
-              key={code}
-              type="button"
-              className={`language-toggle__button${
-                locale === code ? " is-active" : ""
-              }`}
-              onClick={() => setLocale(code)}
-              aria-pressed={locale === code}
-            >
-              {ui.languageLabels[code]}
-            </button>
-          ))}
-        </div>
+        <LanguageToggle
+          locale={locale}
+          labels={ui.languageLabels}
+          ariaLabel={ui.languageToggleLabel}
+          onChange={setLocale}
+          className="language-toggle--header"
+        />
       </header>
 
       <main id="top">

@@ -117,6 +117,10 @@ img {
   backdrop-filter: blur(14px);
 }
 
+.language-toggle--rail {
+  display: none;
+}
+
 .language-toggle__button {
   min-width: 46px;
   padding: 0.45rem 0.7rem;
@@ -140,6 +144,10 @@ img {
   color: #f5f3ee;
 }
 
+.social-rail {
+  display: none;
+}
+
 .section-rail {
   position: fixed;
   top: 50%;
@@ -152,6 +160,7 @@ img {
 .section-rail__inner {
   display: grid;
   gap: 10px;
+  justify-items: end;
 }
 
 .section-rail__eyebrow {
@@ -216,6 +225,45 @@ img {
 .section-rail__link.is-active {
   color: rgba(12, 13, 17, 0.76);
   transform: translateX(-2px);
+}
+
+.social-rail__inner {
+  display: grid;
+  gap: 12px;
+}
+
+.social-rail__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: rgba(12, 13, 17, 0.42);
+  transition:
+    transform 180ms ease,
+    color 180ms ease;
+}
+
+.social-rail__link span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.social-rail__link svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.social-rail__link:hover {
+  transform: translateY(-2px);
+  color: #12151c;
 }
 
 .footer-links a {
@@ -1099,6 +1147,7 @@ img {
 }
 
 @media (max-width: 1120px) {
+  .social-rail,
   .section-rail {
     display: none;
   }
@@ -1106,7 +1155,27 @@ img {
 
 @media (min-width: 1121px) {
   .page-shell {
+    padding-left: 124px;
     padding-right: 124px;
+  }
+
+  .language-toggle--header {
+    display: none;
+  }
+
+  .language-toggle--rail {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 66px;
+    justify-self: end;
+  }
+
+  .language-toggle--rail .language-toggle__button {
+    min-width: 0;
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    font-size: 0.72rem;
   }
 
   .site-header {
@@ -1121,9 +1190,18 @@ img {
   .services-section,
   .about-section,
   .site-footer {
-    width: min(1320px, calc(100vw - 168px));
-    margin-left: max(28px, calc((100vw - 1448px) / 2));
+    width: min(1320px, calc(100vw - 248px));
+    margin-left: auto;
     margin-right: auto;
+  }
+
+  .social-rail {
+    position: fixed;
+    top: 50%;
+    left: 28px;
+    z-index: 20;
+    display: block;
+    transform: translateY(-50%);
   }
 
   .section-rail {
