@@ -402,7 +402,7 @@ export const copy = {
         { text: "usable products.", tone: "strong" },
       ],
       description:
-        "The original page used custom SVG logos and heavy layout wrappers. Here, the same idea is kept with a lighter, editable component structure.",
+        "I shape ideas into clear, interactive products through frontend craft, rapid iteration, and a strong focus on usable experiences.",
       contactAriaLabel: "Jump to contact section",
       cardTitle: "How I build products",
       cardCopy:
@@ -494,7 +494,7 @@ export const copy = {
         { text: "연결합니다.", tone: "soft" },
       ],
       description:
-        "무거운 static export 대신, 수정과 확장이 쉬운 React structure로 다시 정리한 portfolio입니다.",
+        "프론트엔드 완성도와 빠른 반복을 바탕으로 아이디어를 명확하고 인터랙티브한 제품 경험으로 구체화합니다.",
       contactAriaLabel: "Jump to contact section",
       cardTitle: "How I build products",
       cardCopy:
