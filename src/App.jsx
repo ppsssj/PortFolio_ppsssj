@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   HiOutlineAcademicCap,
   HiOutlineArrowLeft,
@@ -156,6 +156,7 @@ function App() {
   const [activeService, setActiveService] = useState(0);
   const [selectedProjectId, setSelectedProjectId] = useState(null);
   const [activeSection, setActiveSection] = useState(sectionIds[0]);
+  const footerRef = useRef(null);
 
   const ui = copy[locale];
   const navigation = navigationItems.map((item) => ({
@@ -296,124 +297,151 @@ function App() {
     };
   }, []);
 
+  const handleFooterPointerMove = (event) => {
+    const footer = footerRef.current;
+
+    if (!footer) {
+      return;
+    }
+
+    const bounds = footer.getBoundingClientRect();
+    const x = ((event.clientX - bounds.left) / bounds.width) * 100;
+    const y = ((event.clientY - bounds.top) / bounds.height) * 100;
+
+    footer.style.setProperty("--footer-glow-x", `${x.toFixed(2)}%`);
+    footer.style.setProperty("--footer-glow-y", `${y.toFixed(2)}%`);
+  };
+
+  const handleFooterPointerLeave = () => {
+    const footer = footerRef.current;
+
+    if (!footer) {
+      return;
+    }
+
+    footer.style.setProperty("--footer-glow-x", "78%");
+    footer.style.setProperty("--footer-glow-y", "20%");
+  };
+
   return (
-    <div className="page-shell">
-      <div className="page-glow page-glow--left" />
-      <div className="page-glow page-glow--right" />
+    <>
+      <div className="page-shell">
+        <div className="page-glow page-glow--left" />
+        <div className="page-glow page-glow--right" />
 
-      <nav className="social-rail" aria-label={socialRailLabel}>
-        <div className="social-rail__inner">
-          {socials.map((item) => {
-            const Icon = footerSocialIcons[item.label];
-            const isExternal = item.href.startsWith("http");
+        <nav className="social-rail" aria-label={socialRailLabel}>
+          <div className="social-rail__inner">
+            {socials.map((item) => {
+              const Icon = footerSocialIcons[item.label];
+              const isExternal = item.href.startsWith("http");
 
-            return (
-              <a
-                key={item.label}
-                className="social-rail__link"
-                href={item.href}
-                target={isExternal ? "_blank" : undefined}
-                rel={isExternal ? "noreferrer" : undefined}
-                aria-label={item.label}
-                title={item.label}
-              >
-                {Icon ? <Icon /> : null}
-                <span>{item.label}</span>
-              </a>
-            );
-          })}
-        </div>
-      </nav>
+              return (
+                <a
+                  key={item.label}
+                  className="social-rail__link"
+                  href={item.href}
+                  target={isExternal ? "_blank" : undefined}
+                  rel={isExternal ? "noreferrer" : undefined}
+                  aria-label={item.label}
+                  title={item.label}
+                >
+                  {Icon ? <Icon /> : null}
+                  <span>{item.label}</span>
+                </a>
+              );
+            })}
+          </div>
+        </nav>
 
-      <nav
-        className="section-rail"
-        aria-label={ui.sectionRailLabel}
-        style={{ "--active-index": activeSectionIndex }}
-      >
-        <div className="section-rail__inner">
+        <nav
+          className="section-rail"
+          aria-label={ui.sectionRailLabel}
+          style={{ "--active-index": activeSectionIndex }}
+        >
+          <div className="section-rail__inner">
+            <LanguageToggle
+              locale={locale}
+              labels={ui.languageLabels}
+              ariaLabel={ui.languageToggleLabel}
+              onChange={setLocale}
+              className="language-toggle--rail"
+            />
+            <p className="section-rail__eyebrow">{ui.sectionRailEyebrow}</p>
+            <div className="section-rail__list">
+              <span className="section-rail__track" aria-hidden="true" />
+              <span className="section-rail__thumb" aria-hidden="true" />
+              {navigation.map((item) => {
+                const isActive = activeSection === item.href.slice(1);
+
+                return (
+                  <a
+                    key={item.href}
+                    className={`section-rail__link${isActive ? " is-active" : ""}`}
+                    href={item.href}
+                    aria-current={isActive ? "location" : undefined}
+                  >
+                    {item.label}
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+        </nav>
+
+        <header className="site-header">
+          <a className="brand" href="#top">
+            PPsssJ.
+          </a>
+
           <LanguageToggle
             locale={locale}
             labels={ui.languageLabels}
             ariaLabel={ui.languageToggleLabel}
             onChange={setLocale}
-            className="language-toggle--rail"
+            className="language-toggle--header"
           />
-          <p className="section-rail__eyebrow">{ui.sectionRailEyebrow}</p>
-          <div className="section-rail__list">
-            <span className="section-rail__track" aria-hidden="true" />
-            <span className="section-rail__thumb" aria-hidden="true" />
-            {navigation.map((item) => {
-              const isActive = activeSection === item.href.slice(1);
+        </header>
 
-              return (
-                <a
-                  key={item.href}
-                  className={`section-rail__link${isActive ? " is-active" : ""}`}
-                  href={item.href}
-                  aria-current={isActive ? "location" : undefined}
-                >
-                  {item.label}
+        <main id="top">
+          <section className="hero">
+            <div className="hero__copy">
+              <p className="eyebrow">{ui.hero.eyebrow}</p>
+              <h1 className="hero__headline" aria-label={ui.hero.headlineAria}>
+                {renderParts(ui.hero.headlineParts, "hero__word")}
+              </h1>
+              <p className="hero__description">{ui.hero.description}</p>
+              <div className="hero__actions">
+                <a className="primary-button" href="#work">
+                  {ui.hero.primaryAction}
                 </a>
-              );
-            })}
-          </div>
-        </div>
-      </nav>
-
-      <header className="site-header">
-        <a className="brand" href="#top">
-          PPsssJ.
-        </a>
-
-        <LanguageToggle
-          locale={locale}
-          labels={ui.languageLabels}
-          ariaLabel={ui.languageToggleLabel}
-          onChange={setLocale}
-          className="language-toggle--header"
-        />
-      </header>
-
-      <main id="top">
-        <section className="hero">
-          <div className="hero__copy">
-            <p className="eyebrow">{ui.hero.eyebrow}</p>
-            <h1 className="hero__headline" aria-label={ui.hero.headlineAria}>
-              {renderParts(ui.hero.headlineParts, "hero__word")}
-            </h1>
-            <p className="hero__description">{ui.hero.description}</p>
-            <div className="hero__actions">
-              <a className="primary-button" href="#work">
-                {ui.hero.primaryAction}
-              </a>
-              <a className="ghost-button" href="#contact">
-                {ui.hero.secondaryAction}
-              </a>
+                <a className="ghost-button" href="#contact">
+                  {ui.hero.secondaryAction}
+                </a>
+              </div>
+              <dl className="hero__stats">
+                {ui.hero.stats.map((stat) => (
+                  <div key={stat.term}>
+                    <dt>{stat.term}</dt>
+                    <dd>{stat.description}</dd>
+                  </div>
+                ))}
+              </dl>
             </div>
-            <dl className="hero__stats">
-              {ui.hero.stats.map((stat) => (
-                <div key={stat.term}>
-                  <dt>{stat.term}</dt>
-                  <dd>{stat.description}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
 
-          <div className="hero__visual" aria-hidden="true">
-            <div className="hero-card hero-card--primary">
-              <img src={profileImage} alt={projects[0].title} loading="eager" />
+            <div className="hero__visual" aria-hidden="true">
+              <div className="hero-card hero-card--primary">
+                <img src={profileImage} alt={projects[0].title} loading="eager" />
+              </div>
+              <div className="hero-card hero-card--accent">
+                <span>{ui.hero.cards.accentEyebrow}</span>
+                <strong>{ui.hero.cards.accentTitle}</strong>
+              </div>
+              <div className="hero-card hero-card--outline">
+                <span>{ui.hero.cards.outlineEyebrow}</span>
+                <strong>{ui.hero.cards.outlineTitle}</strong>
+              </div>
             </div>
-            <div className="hero-card hero-card--accent">
-              <span>{ui.hero.cards.accentEyebrow}</span>
-              <strong>{ui.hero.cards.accentTitle}</strong>
-            </div>
-            <div className="hero-card hero-card--outline">
-              <span>{ui.hero.cards.outlineEyebrow}</span>
-              <strong>{ui.hero.cards.outlineTitle}</strong>
-            </div>
-          </div>
-        </section>
+          </section>
 
         <section
           className="projects-section reveal-section"
@@ -696,14 +724,19 @@ function App() {
 
       </main>
 
+      </div>
+
       <footer
+        ref={footerRef}
         className="site-footer reveal-section"
         id="contact"
         data-reveal-section
+        onPointerMove={handleFooterPointerMove}
+        onPointerLeave={handleFooterPointerLeave}
       >
         <div
           className="site-footer__content reveal-item reveal-item--fade"
-          style={{ "--reveal-delay": "220ms" }}
+          style={{ "--reveal-delay": "260ms" }}
         >
           <div>
             <p className="eyebrow eyebrow--light">{ui.footer.eyebrow}</p>
@@ -745,12 +778,12 @@ function App() {
 
         <div
           className="site-footer__bottom reveal-item reveal-item--fade"
-          style={{ "--reveal-delay": "360ms" }}
+          style={{ "--reveal-delay": "420ms" }}
         >
           <span>{ui.footer.rights}</span>
         </div>
       </footer>
-    </div>
+    </>
   );
 }
 
