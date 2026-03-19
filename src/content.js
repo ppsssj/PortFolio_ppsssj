@@ -342,7 +342,7 @@ export const copy = {
         { text: "AI.", tone: "strong" },
       ],
       description:
-        "A portfolio focused on frontend engineering, interactive experiences, and turning ideas into real products.",
+        "",
       primaryAction: "View projects",
       secondaryAction: "Let's talk",
       stats: [
@@ -360,13 +360,8 @@ export const copy = {
     projects: {
       eyebrow: "From Idea to Interface",
       titleParts: [
-        { text: "Projects", tone: "soft" },
-        { text: "built to explore", tone: "soft" },
-        { text: "ideas,", tone: "strong" },
-        { text: "refine", tone: "soft" },
-        { text: "experiences,", tone: "strong" },
-        { text: "and", tone: "soft" },
-        { text: "deliver", tone: "soft" },
+        { text: "Ideas", tone: "strong" },
+        { text: "shaped into", tone: "soft" },
         { text: "usable products.", tone: "strong" },
       ],
       description:
@@ -384,7 +379,13 @@ export const copy = {
     },
     profile: {
       eyebrow: "Profile",
-      title: "A quick overview of the stack, recognition, and experiences behind my work.",
+      titleParts: [
+        { text: "My", tone: "soft" },
+        { text: "stack,", tone: "strong" },
+        { text: "recognition,", tone: "strong" },
+        { text: "and", tone: "soft" },
+        { text: "experience.", tone: "strong" },
+      ],
       description:
         "This interactive panel highlights the technologies I use, the awards I have received, and the communities I have contributed to.",
       tabAriaLabel: "Profile categories",
@@ -394,11 +395,8 @@ export const copy = {
       eyebrow: "Our Story",
       titleParts: [
         { text: "A", tone: "soft" },
-        { text: "frontend-focused", tone: "strong" },
-        { text: "builder who turns", tone: "soft" },
-        { text: "creative ideas", tone: "strong" },
-        { text: "into", tone: "soft" },
-        { text: "interactive,", tone: "strong" },
+        { text: "frontend builder", tone: "strong" },
+        { text: "creating", tone: "soft" },
         { text: "usable products.", tone: "strong" },
       ],
       description:
@@ -411,9 +409,9 @@ export const copy = {
     },
     footer: {
       eyebrow: "Contact",
-      title: "Let's start creating together.",
+      title: "Let's build together.",
       copy:
-        "The static export has been replaced with a React-first landing page that is ready for further componentization, routing, or CMS/API wiring.",
+        "Open to frontend, product, and creative collaboration.",
       rights: "© 2026 PPsssJ. All rights reserved.",
     },
   },
@@ -456,12 +454,9 @@ export const copy = {
     projects: {
       eyebrow: "From Idea to Interface",
       titleParts: [
-        { text: "ideas를", tone: "soft" },
-        { text: "탐색하고,", tone: "strong" },
-        { text: "experiences를", tone: "soft" },
-        { text: "다듬고,", tone: "strong" },
-        { text: "usable products로", tone: "soft" },
-        { text: "완성합니다.", tone: "strong" },
+        { text: "아이디어를", tone: "strong" },
+        { text: "실용적인 제품으로", tone: "soft" },
+        { text: "구체화합니다.", tone: "strong" },
       ],
       description:
         "interaction design, frontend systems, 그리고 product thinking이 드러나는 프로젝트를 모았습니다.",
@@ -478,7 +473,13 @@ export const copy = {
     },
     profile: {
       eyebrow: "Profile",
-      title: "제가 사용하는 Tech Stack, 받은 Awards, 그리고 Activities를 한 번에 볼 수 있습니다.",
+      titleParts: [
+        { text: "제", tone: "soft" },
+        { text: "스택,", tone: "strong" },
+        { text: "성과,", tone: "strong" },
+        { text: "그리고", tone: "soft" },
+        { text: "경험입니다.", tone: "strong" },
+      ],
       description:
         "Tech Stack, awards, community experiences를 빠르게 살펴볼 수 있도록 구성한 interactive panel입니다.",
       tabAriaLabel: "Profile categories",
@@ -487,11 +488,9 @@ export const copy = {
     story: {
       eyebrow: "Our Story",
       titleParts: [
-        { text: "Frontend를 중심으로", tone: "soft" },
-        { text: "creative ideas를", tone: "strong" },
-        { text: "interactive하고", tone: "strong" },
-        { text: "usable한 products로", tone: "strong" },
-        { text: "연결합니다.", tone: "soft" },
+        { text: "프론트엔드 빌더", tone: "strong" },
+        { text: "가 만드는", tone: "soft" },
+        { text: "실용적인 제품.", tone: "strong" },
       ],
       description:
         "프론트엔드 완성도와 빠른 반복을 바탕으로 아이디어를 명확하고 인터랙티브한 제품 경험으로 구체화합니다.",
@@ -503,9 +502,9 @@ export const copy = {
     },
     footer: {
       eyebrow: "Contact",
-      title: "Let's start creating together.",
+      title: "함께 만들어가요.",
       copy:
-        "정적인 export 페이지를 React-first landing page로 전환해, 이후 componentization, routing, CMS/API wiring까지 확장할 수 있도록 구성했습니다.",
+        "프론트엔드, 프로덕트, 크리에이티브 협업에 열려 있습니다.",
       rights: "© 2026 PPsssJ. All rights reserved.",
     },
   },

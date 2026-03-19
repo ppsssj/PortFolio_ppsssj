@@ -580,7 +580,16 @@ function App() {
           >
             <SectionIntro
               eyebrow={ui.profile.eyebrow}
-              title={ui.profile.title}
+              title={
+                ui.profile.titleParts
+                  ? renderParts(ui.profile.titleParts, "section-title__word")
+                  : ui.profile.title
+              }
+              titleClassName={
+                ui.profile.titleParts
+                  ? "section-title section-title--mixed"
+                  : undefined
+              }
               description={ui.profile.description}
             />
           </div>
@@ -709,14 +718,6 @@ function App() {
             >
               ppssjj020222@gmail.com
             </a>
-
-            <div className="footer-links">
-              {navigation.map((item) => (
-                <a key={item.href} href={item.href}>
-                  {item.label}
-                </a>
-              ))}
-            </div>
 
             <div className="footer-links footer-links--social">
               {socials.map((item) => {
